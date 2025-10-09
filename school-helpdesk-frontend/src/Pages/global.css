@@ -1,0 +1,273 @@
+/* --------------------------
+   THEMES (Light + Dark)
+--------------------------- */
+:root {
+    --bg-color: #121212;
+    --text-color: #e0e0e0;
+    --primary-color: #1f1f1f;
+    --accent-color: #bb86fc;
+    --header-bg: #1a1a1a;
+    --footer-bg: #1a1a1a;
+    --form-bg: #1e1e1e;
+    --link-color: #bb86fc;
+}
+
+/* --------------------------
+   GLOBAL STYLES
+--------------------------- */
+html, body, #root {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+a {
+    text-decoration: none;
+    color: var(--link-color);
+}
+
+    a:hover {
+        color: var(--accent-color);
+    }
+
+button {
+    font-family: 'Roboto', sans-serif;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+    button:hover {
+        transform: translateY(-2px);
+    }
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* --------------------------
+   LANDING PAGE LAYOUT
+--------------------------- */
+.landing-page {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensure full viewport height */
+}
+.logo-img {
+    max-width: 50px;
+    height: auto;
+}
+
+/* --------------------------
+   HEADER + FOOTER
+--------------------------- */
+header, footer {
+    width: 100%;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between; /* keeps logo and nav apart */
+    align-items: center; /* vertical align items */
+    padding: 10px 20px; /* give some breathing room */
+    background-color: var(--header-bg);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+footer {
+    text-align: center;
+    padding: 0.5rem 1rem;
+    background: var(--footer-bg);
+    color: var(--text-color);
+    font-size: 0.9rem;
+}
+
+/* --------------------------
+   RESPONSIVE NAVIGATION
+--------------------------- */
+.nav-links {
+    display: flex;
+    gap: 20px; /* spacing between links */
+    list-style: none;
+}
+
+    .nav-links a {
+        text-decoration: none;
+        color: var(--text-color);
+        font-weight: 500;
+        padding: 8px 12px;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+        .nav-links a:hover {
+            background-color: var(--accent-color);
+            color: white;
+            border-radius: 4px;
+        }
+
+.hamburger {
+    display: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+}
+
+.header-controls {
+    display: flex;
+    gap: 1rem;
+}
+
+/* MOBILE NAVIGATION */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        background: var(--header-bg);
+        width: 100%;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        padding: 1rem;
+    }
+
+        .nav-links.active {
+            display: flex;
+        }
+
+    .hamburger {
+        display: block;
+    }
+}
+
+/* --------------------------
+   MAIN CONTENT
+--------------------------- */
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    box-sizing: border-box;
+    padding-top: 100px;
+}
+
+* {
+    box-sizing: border-box; /* Prevent element overflow due to padding/margin */
+}
+
+.hero {
+    max-width: 800px;
+    width: 100%;
+    text-align: center;
+    padding: 1rem;
+}
+
+    .hero h1 {
+        font-size: 2rem;
+        color: var(--accent-color);
+        margin-bottom: 1rem;
+    }
+
+    .hero p {
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+    }
+
+.btn {
+    padding: 8px 16px;
+    font-size: 0.95rem;
+    background: var(--primary-color);
+    color: var(--text-color);
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+    .btn:hover {
+        background: var(--accent-color);
+    }
+
+/* --------------------------
+   AUTH FORM
+--------------------------- */
+.auth-form {
+    max-width: 400px;
+    width: 100%;
+    background: var(--form-bg);
+    padding: 15px;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    margin-top: 1rem;
+}
+
+    .auth-form h2 {
+        text-align: center;
+        margin-bottom: 1rem;
+    }
+
+    .auth-form form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .auth-form input, .auth-form select {
+        margin-bottom: 1rem;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .auth-form label {
+        margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+    }
+
+/* --------------------------
+   MODAL
+--------------------------- */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.modal-content {
+    background: var(--form-bg);
+    padding: 20px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px;
+}
+
+.close {
+    float: right;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+/* --------------------------
+   RESPONSIVE BREAKPOINTS
+--------------------------- */
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 1.8rem;
+    }
+
+    .auth-form {
+        padding: 10px;
+    }
+}
