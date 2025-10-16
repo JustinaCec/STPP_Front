@@ -5,14 +5,77 @@ import logo from "../assets/logo.png";
 
 export default function Landing() {
     const [menuOpen, setMenuOpen] = useState(false);
-    const [modalOpen, setModalOpen] = useState(false);
+
+    // Form state
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [acceptedTerms, setAcceptedTerms] = useState(false);
+    const role = "Student";
+    // Message modal state
+    const [message, setMessage] = useState("");
 
     const toggleMenu = () => setMenuOpen(!menuOpen);
-    const openModal = () => setModalOpen(true);
-    const closeModal = () => setModalOpen(false);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        if (password !== confirmPassword) {
+            setMessage("Passwords do not match!");
+            return;
+        }
+
+        if (!acceptedTerms) {
+            setMessage("You must accept the terms!");
+            return;
+        }
+
+        try {
+            const response = await fetch("https://stpp-3qmk.onrender.com/api/User/register", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    email,
+                    password,
+                    role// send selected role
+                }),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                setMessage("Registration successful!");
+                // Clear form
+                setEmail("");
+                setPassword("");
+                setConfirmPassword("");
+                setAcceptedTerms(false);
+            } else {
+                setMessage(data.message || "Registration failed!");
+            }
+        } catch (error) {
+            console.error(error);
+            setMessage("Registration failed!");
+        }
+    };
+
+    // Reusable modal for messages
+    const MessageModal = ({ message, onClose }) => {
+        if (!message) return null;
+        return (
+            <div className="modal" onClick={onClose}>
+                <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                    <span className="close" onClick={onClose}>
+                        &times;
+                    </span>
+                    <p>{message}</p>
+                </div>
+            </div>
+        );
+    };
 
     return (
-        <div className="landing-page" style={{ width: "100%", minWidth: "100vw" }}>
+        <div className="landing-page">
             {/* HEADER */}
             <header className="header">
                 <div className="logo">
@@ -34,18 +97,36 @@ export default function Landing() {
             {/* MAIN CONTENT */}
             <main className="main-content">
                 <section className="auth-form">
-                    <h2>Register or Login</h2>
-                    <form>
-                        <input type="text" placeholder="Username" required />
-                        <input type="email" placeholder="Email" required />
-                        <input type="password" placeholder="Password" required />
-                        <select>
-                            <option value="">Select Role</option>
-                            <option value="user">User</option>
-                            <option value="admin">Admin</option>
-                        </select>
+                    <h2>Register</h2>
+                    <form onSubmit={handleSubmit}>
+                        <input
+                            type="email"
+                            placeholder="Email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                        />
+                        <input
+                            type="password"
+                            placeholder="Password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                        />
+                        <input
+                            type="password"
+                            placeholder="Confirm Password"
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
+                            required
+                        />
                         <label>
-                            <input type="checkbox" /> Accept Terms
+                            <input
+                                type="checkbox"
+                                checked={acceptedTerms}
+                                onChange={(e) => setAcceptedTerms(e.target.checked)}
+                            />{" "}
+                            Accept Terms
                         </label>
                         <button type="submit" className="btn">
                             Register
@@ -54,19 +135,8 @@ export default function Landing() {
                 </section>
             </main>
 
-
-            {/* MODAL */}
-            {modalOpen && (
-                <div className="modal" onClick={closeModal}>
-                    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                        <span className="close" onClick={closeModal}>
-                            &times;
-                        </span>
-                        <h2>About MyApp</h2>
-                        <p>This is a responsive landing page with a fixed dark theme.</p>
-                    </div>
-                </div>
-            )}
+            {/* MESSAGE MODAL */}
+            <MessageModal message={message} onClose={() => setMessage("")} />
 
             {/* FOOTER */}
             <footer className="footer">
