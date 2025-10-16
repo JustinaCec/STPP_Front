@@ -51,9 +51,7 @@ export default function Register() {
                 setAcceptedTerms(false);
 
                 // Redirect to login after 1 second
-                setTimeout(() => {
                     navigate("/login");
-                }, 1000);
             } else {
                 setMessage(data.message || "Registration failed!");
             }
