@@ -3,16 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\Justina\\Desktop\\STPP_Front\\school-helpdesk-frontend\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Justina\\Desktop\\STPP_Front\\school-helpdesk-frontend\\src\\Pages\\global.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\Pages\\global.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Justina\\Desktop\\STPP_Front\\school-helpdesk-frontend\\src\\Pages\\Landing.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\Pages\\Landing.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Justina\\Desktop\\STPP_Front\\school-helpdesk-frontend\\src\\Pages\\Landing.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\Pages\\Landing.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Justina\\Desktop\\STPP_Front\\school-helpdesk-frontend\\src\\Pages\\global.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\Pages\\global.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Justina\\Desktop\\STPP_Front\\school-helpdesk-frontend\\src\\App.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
@@ -30,11 +30,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "Landing.css",
               "DocumentMoniker": "C:\\Users\\Justina\\Desktop\\STPP_Front\\school-helpdesk-frontend\\src\\Pages\\Landing.css",
               "RelativeDocumentMoniker": "src\\Pages\\Landing.css",
@@ -47,7 +47,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "global.css",
               "DocumentMoniker": "C:\\Users\\Justina\\Desktop\\STPP_Front\\school-helpdesk-frontend\\src\\Pages\\global.css",
               "RelativeDocumentMoniker": "src\\Pages\\global.css",
@@ -60,13 +60,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "Landing.jsx",
               "DocumentMoniker": "C:\\Users\\Justina\\Desktop\\STPP_Front\\school-helpdesk-frontend\\src\\Pages\\Landing.jsx",
               "RelativeDocumentMoniker": "src\\Pages\\Landing.jsx",
               "ToolTip": "C:\\Users\\Justina\\Desktop\\STPP_Front\\school-helpdesk-frontend\\src\\Pages\\Landing.jsx",
               "RelativeToolTip": "src\\Pages\\Landing.jsx",
-              "ViewState": "AgIAABoAAAAAAAAAAAAAwDcAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAHcAAAAAAAAAAAAYwIQAAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
               "WhenOpened": "2025-10-09T11:03:45.018Z",
               "EditorCaption": ""
@@ -81,8 +81,7 @@
               "RelativeToolTip": "src\\App.jsx",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
-              "WhenOpened": "2025-10-09T10:59:16.072Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-09T10:59:16.072Z"
             },
             {
               "$type": "Document",
@@ -94,8 +93,7 @@
               "RelativeToolTip": "src\\App.css",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2025-10-09T10:59:09.519Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-09T10:59:09.519Z"
             }
           ]
         }

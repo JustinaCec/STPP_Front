@@ -1,78 +1,12 @@
 import React, { useState } from "react";
-import "./global.css";
+import { Link } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa";
 import logo from "../assets/logo.png";
+import "./global.css";
 
 export default function Landing() {
     const [menuOpen, setMenuOpen] = useState(false);
-
-    // Form state
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
-    const [acceptedTerms, setAcceptedTerms] = useState(false);
-    const role = "Student";
-    // Message modal state
-    const [message, setMessage] = useState("");
-
     const toggleMenu = () => setMenuOpen(!menuOpen);
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-
-        if (password !== confirmPassword) {
-            setMessage("Passwords do not match!");
-            return;
-        }
-
-        if (!acceptedTerms) {
-            setMessage("You must accept the terms!");
-            return;
-        }
-
-        try {
-            const response = await fetch("https://stpp-3qmk.onrender.com/api/User/register", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    email,
-                    password,
-                    role// send selected role
-                }),
-            });
-
-            const data = await response.json();
-
-            if (response.ok) {
-                setMessage("Registration successful!");
-                // Clear form
-                setEmail("");
-                setPassword("");
-                setConfirmPassword("");
-                setAcceptedTerms(false);
-            } else {
-                setMessage(data.message || "Registration failed!");
-            }
-        } catch (error) {
-            console.error(error);
-            setMessage("Registration failed!");
-        }
-    };
-
-    // Reusable modal for messages
-    const MessageModal = ({ message, onClose }) => {
-        if (!message) return null;
-        return (
-            <div className="modal" onClick={onClose}>
-                <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                    <span className="close" onClick={onClose}>
-                        &times;
-                    </span>
-                    <p>{message}</p>
-                </div>
-            </div>
-        );
-    };
 
     return (
         <div className="landing-page">
@@ -82,10 +16,9 @@ export default function Landing() {
                     <img src={logo} alt="MyApp Logo" className="logo-img" />
                 </div>
                 <nav className={`nav-links ${menuOpen ? "active" : ""}`}>
-                    <a href="#home">Home</a>
-                    <a href="#features">Features</a>
-                    <a href="#contact">Contact</a>
-                    <a href="#login">Login</a>
+                    <Link to="/">Home</Link>
+                    <Link to="/login">Login</Link>
+                    <Link to="/register">Register</Link>
                 </nav>
                 <div className="header-controls">
                     <div className="hamburger" onClick={toggleMenu}>
@@ -96,52 +29,26 @@ export default function Landing() {
 
             {/* MAIN CONTENT */}
             <main className="main-content">
-                <section className="auth-form">
-                    <h2>Register</h2>
-                    <form onSubmit={handleSubmit}>
-                        <input
-                            type="email"
-                            placeholder="Email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            required
-                        />
-                        <input
-                            type="password"
-                            placeholder="Password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            required
-                        />
-                        <input
-                            type="password"
-                            placeholder="Confirm Password"
-                            value={confirmPassword}
-                            onChange={(e) => setConfirmPassword(e.target.value)}
-                            required
-                        />
-                        <label>
-                            <input
-                                type="checkbox"
-                                checked={acceptedTerms}
-                                onChange={(e) => setAcceptedTerms(e.target.checked)}
-                            />{" "}
-                            Accept Terms
-                        </label>
-                        <button type="submit" className="btn">
-                            Register
-                        </button>
-                    </form>
+                <section className="hero">
+                    <h1>Welcome to School Help Desk</h1>
+                    <p>
+                        This platform allows students and admins to manage support tickets,
+                        track progress, and communicate effectively within the school system.
+                    </p>
+                    <p>
+                        Use the navigation above to register or login and get started!
+                    </p>
+                    <div className="hero-buttons">
+                        <Link to="/register" className="btn">Register</Link>
+                        <Link to="/login" className="btn">Login</Link>
+                    </div>
                 </section>
             </main>
-
-            {/* MESSAGE MODAL */}
-            <MessageModal message={message} onClose={() => setMessage("")} />
 
             {/* FOOTER */}
             <footer className="footer">
                 <p>
-                    &copy; 2025 MyApp | <a href="#privacy">Privacy Policy</a>
+                    &copy; 2025 School Help Desk | <Link to="#privacy">Privacy Policy</Link>
                 </p>
             </footer>
         </div>

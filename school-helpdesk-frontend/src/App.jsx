@@ -1,12 +1,17 @@
 import React from "react";
-import LandingPage from "./Pages/Landing";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Landing from "./Pages/Landing";
+import Register from "./Pages/Register";
+import Login from "./Pages/Login";
 
-function App() {
+export default function App() {
     return (
-        <div className="App">
-            <LandingPage />
-        </div>
+        <Router>
+            <Routes>
+             <Route path="/" element={<Landing />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+            </Routes>
+        </Router>
     );
 }
-
-export default App;
