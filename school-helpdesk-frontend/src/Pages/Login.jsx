@@ -1,17 +1,15 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom"; // <-- import Link for routing
+﻿import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom"; // ✅ useNavigate for redirect
 import "./global.css";
 import { FaBars, FaTimes } from "react-icons/fa";
 import logo from "../assets/logo.png";
 
 export default function Login() {
     const [menuOpen, setMenuOpen] = useState(false);
-
-    // Form state
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    // Message modal state
     const [message, setMessage] = useState("");
+    const navigate = useNavigate(); // ✅ Hook for navigation
 
     const toggleMenu = () => setMenuOpen(!menuOpen);
 
@@ -19,19 +17,24 @@ export default function Login() {
         e.preventDefault();
 
         try {
-            const response = await fetch(
-                "https://stpp-3qmk.onrender.com/api/User/login",
-                {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ email, password }),
-                }
-            );
+            const response = await fetch("https://stpp-3qmk.onrender.com/api/User/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email, password }),
+            });
 
             const data = await response.json();
 
             if (response.ok) {
                 setMessage("Login successful!");
+
+                // ✅ Save token to localStorage
+                localStorage.setItem("token", data.token);
+                localStorage.setItem("refreshToken", data.refreshToken);
+
+                // ✅ Redirect after short delay
+                setTimeout(() => navigate("/admin"), 1000);
+
                 setEmail("");
                 setPassword("");
             } else {
@@ -43,7 +46,7 @@ export default function Login() {
         }
     };
 
-    // Reusable modal for messages
+    // Reusable message modal
     const MessageModal = ({ message, onClose }) => {
         if (!message) return null;
         return (
@@ -79,7 +82,7 @@ export default function Login() {
             {/* MAIN CONTENT */}
             <main className="main-content">
                 <section className="auth-form">
-                    <h2>Login</h2> {/* Fixed heading */}
+                    <h2>Login</h2>
                     <form onSubmit={handleSubmit}>
                         <input
                             type="email"
@@ -108,7 +111,7 @@ export default function Login() {
             {/* FOOTER */}
             <footer className="footer">
                 <p>
-                    &copy; 2025 MyApp | <Link to="#privacy">Privacy Policy</Link>
+                    &copy; 2025 MyApp | <Link to="#">Privacy Policy</Link>
                 </p>
             </footer>
         </div>

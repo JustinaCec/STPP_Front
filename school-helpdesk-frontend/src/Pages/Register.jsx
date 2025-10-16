@@ -1,21 +1,19 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom"; // <-- import Link
+import { Link, useNavigate } from "react-router-dom"; // <-- import useNavigate
 import "./global.css";
 import { FaBars, FaTimes } from "react-icons/fa";
 import logo from "../assets/logo.png";
 
 export default function Register() {
     const [menuOpen, setMenuOpen] = useState(false);
-
-    // Form state
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [acceptedTerms, setAcceptedTerms] = useState(false);
     const role = "Student";
-
-    // Message modal state
     const [message, setMessage] = useState("");
+
+    const navigate = useNavigate(); // <-- create navigate instance
 
     const toggleMenu = () => setMenuOpen(!menuOpen);
 
@@ -51,6 +49,11 @@ export default function Register() {
                 setPassword("");
                 setConfirmPassword("");
                 setAcceptedTerms(false);
+
+                // Redirect to login after 1 second
+                setTimeout(() => {
+                    navigate("/login");
+                }, 1000);
             } else {
                 setMessage(data.message || "Registration failed!");
             }
@@ -60,15 +63,13 @@ export default function Register() {
         }
     };
 
-    // Reusable modal for messages
+    // Modal for messages
     const MessageModal = ({ message, onClose }) => {
         if (!message) return null;
         return (
             <div className="modal" onClick={onClose}>
                 <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                    <span className="close" onClick={onClose}>
-                        &times;
-                    </span>
+                    <span className="close" onClick={onClose}>&times;</span>
                     <p>{message}</p>
                 </div>
             </div>
@@ -85,6 +86,7 @@ export default function Register() {
                 <nav className={`nav-links ${menuOpen ? "active" : ""}`}>
                     <Link to="/">Home</Link>
                     <Link to="/login">Login</Link>
+                    <Link to="/register">Register</Link>
                 </nav>
                 <div className="header-controls">
                     <div className="hamburger" onClick={toggleMenu}>
@@ -127,21 +129,15 @@ export default function Register() {
                             />{" "}
                             Accept Terms
                         </label>
-                        <button type="submit" className="btn">
-                            Register
-                        </button>
+                        <button type="submit" className="btn">Register</button>
                     </form>
                 </section>
             </main>
 
-            {/* MESSAGE MODAL */}
             <MessageModal message={message} onClose={() => setMessage("")} />
 
-            {/* FOOTER */}
             <footer className="footer">
-                <p>
-                    &copy; 2025 MyApp | <Link to="#privacy">Privacy Policy</Link>
-                </p>
+                <p>&copy; 2025 MyApp | <Link to="#privacy">Privacy Policy</Link></p>
             </footer>
         </div>
     );
