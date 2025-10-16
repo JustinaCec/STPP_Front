@@ -33,7 +33,9 @@ export default function Login() {
                 localStorage.setItem("refreshToken", data.refreshToken);
 
                 // ✅ Redirect after short delay
-                setTimeout(() => navigate("/admin"), 1000);
+                setTimeout(() => {
+                    navigate("/admin");
+                }, 1000);
 
                 setEmail("");
                 setPassword("");
