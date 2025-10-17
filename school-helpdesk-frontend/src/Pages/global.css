@@ -51,7 +51,67 @@ img {
     height: auto;
     display: block;
 }
+/* TABLE */
+/* ===== TABLE ROW / CELL STYLING ===== */
 
+.user-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1.5rem;
+    background: var(--primary-color);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+
+    .user-table th {
+        background-color: var(--header-bg);
+        color: var(--text-color);
+        text-align: left;
+        padding: 14px 16px;
+        font-weight: 600;
+        font-size: 0.95rem;
+    }
+
+    .user-table td {
+        padding: 12px 16px;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        font-size: 0.9rem;
+        color: var(--text-color);
+    }
+
+    .user-table tr:nth-child(even) {
+        background-color: #1a1a1a;
+    }
+
+    .user-table tr:nth-child(odd) {
+        background-color: var(--primary-color);
+    }
+
+    .user-table tr:hover {
+        background-color: var(--accent-color);
+        color: #121212; /* text contrast for hover */
+        transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    .user-table th:first-child,
+    .user-table td:first-child {
+        border-top-left-radius: 10px;
+    }
+
+    .user-table th:last-child,
+    .user-table td:last-child {
+        border-top-right-radius: 10px;
+    }
+
+/* Responsive tweak */
+@media (max-width: 768px) {
+    .user-table th,
+    .user-table td {
+        padding: 10px;
+        font-size: 0.85rem;
+    }
+}
 /* --------------------------
    LANDING PAGE LAYOUT
 --------------------------- */
@@ -278,59 +338,5 @@ footer {
         padding: 10px;
     }
 }
-/* TABLE */
-/* ===== TABLE ROW / CELL STYLING ===== */
 
-.user-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 1.5rem;
-    background: #fff;
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-    .user-table th {
-        background-color: #1e293b;
-        color: #fff;
-        text-align: left;
-        padding: 14px 16px;
-        font-weight: 600;
-        font-size: 0.95rem;
-    }
-
-    .user-table td {
-        padding: 12px 16px;
-        border-bottom: 1px solid #e2e8f0;
-        font-size: 0.9rem;
-        color: #334155;
-    }
-
-    .user-table tr:nth-child(even) {
-        background-color: #f8fafc;
-    }
-
-    .user-table tr:hover {
-        background-color: #eef2ff;
-        transition: background-color 0.2s ease;
-    }
-
-    .user-table th:first-child,
-    .user-table td:first-child {
-        border-top-left-radius: 10px;
-    }
-
-    .user-table th:last-child,
-    .user-table td:last-child {
-        border-top-right-radius: 10px;
-    }
-
-/* Responsive tweak */
-@media (max-width: 768px) {
-    .user-table th,
-    .user-table td {
-        padding: 10px;
-        font-size: 0.85rem;
-    }
-}
 
