@@ -11,7 +11,7 @@ export default function AdminPage() {
     const [editUser, setEditUser] = useState(null); // user being edited
 
     const toggleMenu = () => setMenuOpen(!menuOpen);
-    const token = localStorage.getItem("accessToken");
+    const token = localStorage.getItem("token");
 
     // Fetch all users
     const fetchUsers = async () => {
