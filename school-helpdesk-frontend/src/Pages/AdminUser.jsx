@@ -8,13 +8,18 @@ export default function AdminPage() {
     const [menuOpen, setMenuOpen] = useState(false);
     const [users, setUsers] = useState([]);
     const [message, setMessage] = useState("");
+    const token = localStorage.getItem("token");
 
     const toggleMenu = () => setMenuOpen(!menuOpen);
 
     // Fetch all users
     const fetchUsers = async () => {
         try {
-            const res = await fetch("https://stpp-3qmk.onrender.com/api/User");
+            const res = await fetch("https://stpp-3qmk.onrender.com/api/User", {
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                },
+            });
             const data = await res.json();
             if (res.ok) {
                 setUsers(data);
@@ -38,6 +43,9 @@ export default function AdminPage() {
         try {
             const res = await fetch(`https://stpp-3qmk.onrender.com/api/User/${id}`, {
                 method: "DELETE",
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                },
             });
 
             if (res.ok) {
@@ -58,7 +66,10 @@ export default function AdminPage() {
         try {
             const res = await fetch(`https://stpp-3qmk.onrender.com/api/User/${id}`, {
                 method: "PUT",
-                headers: { "Content-Type": "application/json" },
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`,
+                },
                 body: JSON.stringify({ role: newRole }),
             });
 
