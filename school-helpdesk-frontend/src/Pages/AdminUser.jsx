@@ -99,13 +99,13 @@ export default function AdminPage() {
                         type="email"
                         value={user.email}
                         onChange={(e) => setEditUser({ ...user, email: e.target.value })}
-                    />
+                    /><br></br>
                     <label>New Password (optional):</label>
                     <input
                         type="password"
                         placeholder="Leave blank to keep same"
                         onChange={(e) => setEditUser({ ...user, password: e.target.value })}
-                    />
+                    /><br></br>
                     <label>Role:</label>
                     <select
                         value={user.role}
@@ -113,7 +113,7 @@ export default function AdminPage() {
                     >
                         <option value="Student">Student</option>
                         <option value="Admin">Admin</option>
-                    </select>
+                    </select><br></br>
                     <button className="btn save-btn" onClick={handleSaveEdit}>Save</button>
                 </div>
             </div>
