@@ -8,24 +8,20 @@ export default function AdminPage() {
     const [menuOpen, setMenuOpen] = useState(false);
     const [users, setUsers] = useState([]);
     const [message, setMessage] = useState("");
-    const token = localStorage.getItem("token");
+    const [editUser, setEditUser] = useState(null); // user being edited
 
     const toggleMenu = () => setMenuOpen(!menuOpen);
+    const token = localStorage.getItem("accessToken");
 
     // Fetch all users
     const fetchUsers = async () => {
         try {
             const res = await fetch("https://stpp-3qmk.onrender.com/api/User", {
-                headers: {
-                    "Authorization": `Bearer ${token}`,
-                },
+                headers: { "Authorization": `Bearer ${token}` },
             });
             const data = await res.json();
-            if (res.ok) {
-                setUsers(data);
-            } else {
-                setMessage(data.message || "Failed to fetch users");
-            }
+            if (res.ok) setUsers(data);
+            else setMessage(data.message || "Failed to fetch users");
         } catch (error) {
             console.error(error);
             setMessage("Failed to fetch users");
@@ -43,9 +39,7 @@ export default function AdminPage() {
         try {
             const res = await fetch(`https://stpp-3qmk.onrender.com/api/User/${id}`, {
                 method: "DELETE",
-                headers: {
-                    "Authorization": `Bearer ${token}`,
-                },
+                headers: { "Authorization": `Bearer ${token}` },
             });
 
             if (res.ok) {
@@ -61,21 +55,27 @@ export default function AdminPage() {
         }
     };
 
-    // Update user role
-    const handleRoleChange = async (id, newRole) => {
+    // Save updated user data
+    const handleSaveEdit = async () => {
+        if (!editUser) return;
         try {
-            const res = await fetch(`https://stpp-3qmk.onrender.com/api/User/${id}`, {
+            const res = await fetch(`https://stpp-3qmk.onrender.com/api/User/${editUser.id}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${token}`,
                 },
-                body: JSON.stringify({ role: newRole }),
+                body: JSON.stringify({
+                    email: editUser.email,
+                    password: editUser.password || undefined,
+                    role: editUser.role,
+                }),
             });
 
             if (res.ok) {
                 setMessage("User updated successfully");
-                setUsers(users.map((u) => (u.id === id ? { ...u, role: newRole } : u)));
+                setEditUser(null);
+                fetchUsers();
             } else {
                 const data = await res.json();
                 setMessage(data.message || "Failed to update user");
@@ -84,6 +84,40 @@ export default function AdminPage() {
             console.error(error);
             setMessage("Failed to update user");
         }
+    };
+
+    // Modal for editing user
+    const EditUserModal = ({ user, onClose }) => {
+        if (!user) return null;
+        return (
+            <div className="modal" onClick={onClose}>
+                <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                    <span className="close" onClick={onClose}>&times;</span>
+                    <h3>Edit User</h3>
+                    <label>Email:</label>
+                    <input
+                        type="email"
+                        value={user.email}
+                        onChange={(e) => setEditUser({ ...user, email: e.target.value })}
+                    />
+                    <label>New Password (optional):</label>
+                    <input
+                        type="password"
+                        placeholder="Leave blank to keep same"
+                        onChange={(e) => setEditUser({ ...user, password: e.target.value })}
+                    />
+                    <label>Role:</label>
+                    <select
+                        value={user.role}
+                        onChange={(e) => setEditUser({ ...user, role: e.target.value })}
+                    >
+                        <option value="Student">Student</option>
+                        <option value="Admin">Admin</option>
+                    </select>
+                    <button className="btn save-btn" onClick={handleSaveEdit}>Save</button>
+                </div>
+            </div>
+        );
     };
 
     const MessageModal = ({ message, onClose }) => {
@@ -118,7 +152,7 @@ export default function AdminPage() {
             </header>
 
             {/* MAIN CONTENT */}
-            <main className="main-content">
+            <main className="main-content-text">
                 <section className="admin-panel">
                     <h2>Admin Panel - Users</h2>
                     {users.length === 0 ? (
@@ -136,24 +170,11 @@ export default function AdminPage() {
                                 {users.map((user) => (
                                     <tr key={user.id}>
                                         <td>{user.email}</td>
-                                        <td>
-                                            <select
-                                                value={user.role}
-                                                onChange={(e) => handleRoleChange(user.id, e.target.value)}
-                                            >
-                                                <option value="Student">Student</option>
-                                                <option value="Admin">Admin</option>
-                                            </select>
-                                        </td>
+                                        <td>{user.role}</td>
                                         <td>
                                             <button
                                                 className="btn edit-btn"
-                                                onClick={() =>
-                                                    handleRoleChange(
-                                                        user.id,
-                                                        user.role === "Student" ? "Admin" : "Student"
-                                                    )
-                                                }
+                                                onClick={() => setEditUser(user)}
                                             >
                                                 <FaEdit /> Update
                                             </button>
@@ -172,6 +193,7 @@ export default function AdminPage() {
                 </section>
             </main>
 
+            <EditUserModal user={editUser} onClose={() => setEditUser(null)} />
             <MessageModal message={message} onClose={() => setMessage("")} />
 
             <footer className="footer">
