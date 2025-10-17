@@ -6,102 +6,110 @@ import logo from "../assets/logo.png";
 
 export default function TicketTypesAdmin() {
     const [menuOpen, setMenuOpen] = useState(false);
-    const [ticketTypes, setTicketTypes] = useState([]);
-    const [selectedType, setSelectedType] = useState(null);
-    const [tickets, setTickets] = useState([]);
+    const [types, setTypes] = useState([]);
+    const [tickets, setTickets] = useState({});
     const [message, setMessage] = useState("");
     const [modalOpen, setModalOpen] = useState(false);
-    const [modalData, setModalData] = useState({ name: "" });
+    const [modalData, setModalData] = useState({ id: null, name: "" });
+
+    const token = localStorage.getItem("token");
 
     const toggleMenu = () => setMenuOpen(!menuOpen);
 
     // Fetch all ticket types
-    const fetchTicketTypes = async () => {
+    const fetchTypes = async () => {
         try {
-            const res = await fetch("https://stpp-3qmk.onrender.com/api/TicketTypes");
+            const res = await fetch("https://stpp-3qmk.onrender.com/api/TicketType", {
+                headers: { Authorization: `Bearer ${token}` },
+            });
             const data = await res.json();
-            if (res.ok) setTicketTypes(data);
-            else setMessage(data.message || "Failed to fetch ticket types");
-        } catch (err) {
-            console.error(err);
-            setMessage("Failed to fetch ticket types");
+            if (res.ok) setTypes(data);
+            else setMessage(data.message || "Failed to fetch types");
+        } catch (error) {
+            console.error(error);
+            setMessage("Failed to fetch types");
         }
     };
 
-    useEffect(() => {
-        fetchTicketTypes();
-    }, []);
-
-    // Fetch tickets for a specific type
+    // Fetch tickets for a type
     const fetchTickets = async (typeId) => {
         try {
-            const res = await fetch(`https://stpp-3qmk.onrender.com/api/Tickets/byType/${typeId}`);
-            const data = await res.json();
-            if (res.ok) setTickets(data);
-            else setMessage(data.message || "Failed to fetch tickets");
-        } catch (err) {
-            console.error(err);
+            const res = await fetch(`https://stpp-3qmk.onrender.com/api/Ticket`, {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+            const allTickets = await res.json();
+            if (res.ok) {
+                const filtered = allTickets.filter((t) => t.typeId === typeId);
+                setTickets((prev) => ({ ...prev, [typeId]: filtered }));
+            } else {
+                setMessage("Failed to fetch tickets");
+            }
+        } catch (error) {
+            console.error(error);
             setMessage("Failed to fetch tickets");
         }
     };
 
-    // Open modal for add/edit
-    const openModal = (type = null) => {
-        setModalData(type ? { id: type.id, name: type.name } : { name: "" });
-        setModalOpen(true);
-    };
+    useEffect(() => {
+        fetchTypes();
+    }, []);
 
-    const closeModal = () => setModalOpen(false);
-
-    // Add or update ticket type
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    // Delete a ticket type
+    const handleDeleteType = async (id) => {
+        if (!window.confirm("Delete this ticket type?")) return;
         try {
-            const method = modalData.id ? "PUT" : "POST";
-            const url = modalData.id
-                ? `https://stpp-3qmk.onrender.com/api/TicketTypes/${modalData.id}`
-                : "https://stpp-3qmk.onrender.com/api/TicketTypes";
-
-            const res = await fetch(url, {
-                method,
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ name: modalData.name }),
+            const res = await fetch(`https://stpp-3qmk.onrender.com/api/TicketType/${id}`, {
+                method: "DELETE",
+                headers: { Authorization: `Bearer ${token}` },
             });
-
             if (res.ok) {
-                setMessage(modalData.id ? "Ticket type updated" : "Ticket type added");
-                fetchTicketTypes();
-                closeModal();
+                setMessage("Ticket type deleted");
+                setTypes(types.filter((t) => t.id !== id));
             } else {
                 const data = await res.json();
-                setMessage(data.message || "Operation failed");
+                setMessage(data.message || "Failed to delete type");
             }
-        } catch (err) {
-            console.error(err);
-            setMessage("Operation failed");
+        } catch (error) {
+            console.error(error);
+            setMessage("Failed to delete type");
         }
     };
 
-    // Delete ticket type
-    const handleDelete = async (id) => {
-        if (!window.confirm("Are you sure you want to delete this ticket type?")) return;
+    // Open modal for add/update
+    const openModal = (type = { id: null, name: "" }) => {
+        setModalData(type);
+        setModalOpen(true);
+    };
+    const closeModal = () => {
+        setModalOpen(false);
+        setModalData({ id: null, name: "" });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const method = modalData.id ? "PUT" : "POST";
+        const url = modalData.id
+            ? `https://stpp-3qmk.onrender.com/api/TicketType/${modalData.id}`
+            : "https://stpp-3qmk.onrender.com/api/TicketType";
 
         try {
-            const res = await fetch(`https://stpp-3qmk.onrender.com/api/TicketTypes/${id}`, {
-                method: "DELETE",
+            const res = await fetch(url, {
+                method,
+                headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+                body: JSON.stringify({ id: modalData.id, name: modalData.name }),
             });
 
+            const data = await res.json();
             if (res.ok) {
-                setMessage("Ticket type deleted");
-                setTicketTypes(ticketTypes.filter((t) => t.id !== id));
-                if (selectedType?.id === id) setTickets([]);
+                setMessage(`Ticket type ${modalData.id ? "updated" : "added"} successfully`);
+                fetchTypes();
+                closeModal();
             } else {
-                const data = await res.json();
-                setMessage(data.message || "Failed to delete ticket type");
+                setMessage(data.message || "Operation failed");
             }
-        } catch (err) {
-            console.error(err);
-            setMessage("Failed to delete ticket type");
+        } catch (error) {
+            console.error(error);
+            setMessage("Operation failed");
         }
     };
 
@@ -110,9 +118,7 @@ export default function TicketTypesAdmin() {
         return (
             <div className="modal" onClick={onClose}>
                 <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                    <span className="close" onClick={onClose}>
-                        &times;
-                    </span>
+                    <span className="close" onClick={onClose}>&times;</span>
                     <p>{message}</p>
                 </div>
             </div>
@@ -121,15 +127,14 @@ export default function TicketTypesAdmin() {
 
     return (
         <div className="landing-page">
-            {/* HEADER */}
             <header className="header">
                 <div className="logo">
                     <img src={logo} alt="MyApp Logo" className="logo-img" />
                 </div>
                 <nav className={`nav-links ${menuOpen ? "active" : ""}`}>
                     <Link to="/">Home</Link>
-                    <Link to="/admin/users">Users</Link>
-                    <Link to="/admin/ticket-types">Ticket Types</Link>
+                    <Link to="/login">Login</Link>
+                    <Link to="/register">Register</Link>
                 </nav>
                 <div className="header-controls">
                     <div className="hamburger" onClick={toggleMenu}>
@@ -138,51 +143,40 @@ export default function TicketTypesAdmin() {
                 </div>
             </header>
 
-            {/* MAIN CONTENT */}
             <main className="main-content">
                 <section className="admin-panel">
-                    <h2>Ticket Types</h2>
-                    <button className="btn" onClick={() => openModal()}>
-                        <FaPlus /> Add New Type
-                    </button>
-
-                    {ticketTypes.length === 0 ? (
-                        <p>No ticket types found.</p>
-                    ) : (
+                    <h2>Ticket Types Admin</h2>
+                    <button className="btn" onClick={() => openModal()}><FaPlus /> Add Type</button>
+                    {types.length === 0 ? <p>No ticket types found.</p> : (
                         <table className="user-table">
                             <thead>
                                 <tr>
                                     <th>Name</th>
-                                    <th>Tickets Count</th>
+                                    <th>Tickets</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {ticketTypes.map((type) => (
+                                {types.map((type) => (
                                     <tr key={type.id}>
                                         <td>{type.name}</td>
                                         <td>
-                                            <button
-                                                className="btn"
-                                                onClick={() => {
-                                                    setSelectedType(type);
-                                                    fetchTickets(type.id);
-                                                }}
-                                            >
-                                                View Tickets
+                                            <button className="btn" onClick={() => fetchTickets(type.id)}>
+                                                View Tickets ({tickets[type.id]?.length || 0})
                                             </button>
+                                            {tickets[type.id] && (
+                                                <ul>
+                                                    {tickets[type.id].map((t) => (
+                                                        <li key={t.id}>{t.title}</li>
+                                                    ))}
+                                                </ul>
+                                            )}
                                         </td>
                                         <td>
-                                            <button
-                                                className="btn edit-btn"
-                                                onClick={() => openModal(type)}
-                                            >
+                                            <button className="btn edit-btn" onClick={() => openModal(type)}>
                                                 <FaEdit /> Edit
                                             </button>
-                                            <button
-                                                className="btn delete-btn"
-                                                onClick={() => handleDelete(type.id)}
-                                            >
+                                            <button className="btn delete-btn" onClick={() => handleDeleteType(type.id)}>
                                                 <FaTrash /> Delete
                                             </button>
                                         </td>
@@ -191,48 +185,33 @@ export default function TicketTypesAdmin() {
                             </tbody>
                         </table>
                     )}
-
-                    {/* Display tickets for selected type */}
-                    {selectedType && tickets.length > 0 && (
-                        <div style={{ marginTop: "2rem" }}>
-                            <h3>Tickets for "{selectedType.name}"</h3>
-                            <ul>
-                                {tickets.map((t) => (
-                                    <li key={t.id}>{t.title}</li>
-                                ))}
-                            </ul>
-                        </div>
-                    )}
                 </section>
             </main>
 
-            {/* Add/Edit Modal */}
             {modalOpen && (
                 <div className="modal" onClick={closeModal}>
                     <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                        <span className="close" onClick={closeModal}>
-                            &times;
-                        </span>
-                        <h3>{modalData.id ? "Edit Ticket Type" : "Add Ticket Type"}</h3>
+                        <span className="close" onClick={closeModal}>&times;</span>
+                        <h3>{modalData.id ? "Update Type" : "Add Ticket Type"}</h3>
                         <form onSubmit={handleSubmit}>
                             <input
                                 type="text"
                                 placeholder="Type Name"
                                 value={modalData.name}
-                                onChange={(e) =>
-                                    setModalData({ ...modalData, name: e.target.value })
-                                }
+                                onChange={(e) => setModalData({ ...modalData, name: e.target.value })}
                                 required
                             />
-                            <button className="btn" type="submit">
-                                {modalData.id ? "Update" : "Add"}
-                            </button>
+                            <button type="submit" className="btn">{modalData.id ? "Update" : "Add"}</button>
                         </form>
                     </div>
                 </div>
             )}
 
             <MessageModal message={message} onClose={() => setMessage("")} />
+
+            <footer className="footer">
+                <p>&copy; 2025 MyApp | <Link to="#privacy">Privacy Policy</Link></p>
+            </footer>
         </div>
     );
 }
