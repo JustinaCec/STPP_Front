@@ -7,12 +7,12 @@ export default function AdminTicketsPage() {
     const [types, setTypes] = useState([]);
     const [tickets, setTickets] = useState({});
     const [message, setMessage] = useState("");
-    const [modalData, setModalData] = useState(null); // For add/edit modal
-    const [modalType, setModalType] = useState(null); // "ticket" or "type"
+    const [modalData, setModalData] = useState(null);
+    const [modalType, setModalType] = useState(null);
 
-    const token = localStorage.getItem("token"); // Bearer token
+    const token = localStorage.getItem("token");
 
-    // Fetch all ticket types
+    // --- FETCH TICKET TYPES ---
     const fetchTypes = async () => {
         try {
             const res = await fetch("https://stpp-3qmk.onrender.com/api/TicketType", {
@@ -27,7 +27,7 @@ export default function AdminTicketsPage() {
         }
     };
 
-    // Fetch all tickets and group by type (include uncategorized)
+    // --- FETCH TICKETS (GROUPED BY TYPE) ---
     const fetchTicketsByType = async () => {
         const newTickets = {};
         try {
@@ -51,20 +51,20 @@ export default function AdminTicketsPage() {
 
     useEffect(() => {
         fetchTypes();
+        fetchTicketsByType();
     }, []);
 
-    useEffect(() => {
-        fetchTicketsByType();
-    }, [types]);
-
-    // DELETE type
+    // --- DELETE TYPE ---
     const handleDeleteType = async (id) => {
         if (!window.confirm("Delete this type?")) return;
         try {
-            const res = await fetch(`https://stpp-3qmk.onrender.com/api/TicketType/${id}`, {
-                method: "DELETE",
-                headers: { Authorization: `Bearer ${token}` },
-            });
+            const res = await fetch(
+                `https://stpp-3qmk.onrender.com/api/TicketType/${id}`,
+                {
+                    method: "DELETE",
+                    headers: { Authorization: `Bearer ${token}` },
+                }
+            );
             if (res.ok) {
                 setMessage("Type deleted successfully");
                 setTypes(types.filter((t) => t.id !== id));
@@ -78,14 +78,17 @@ export default function AdminTicketsPage() {
         }
     };
 
-    // DELETE ticket
+    // --- DELETE TICKET ---
     const handleDeleteTicket = async (id, typeId) => {
         if (!window.confirm("Delete this ticket?")) return;
         try {
-            const res = await fetch(`https://stpp-3qmk.onrender.com/api/Ticket/${id}`, {
-                method: "DELETE",
-                headers: { Authorization: `Bearer ${token}` },
-            });
+            const res = await fetch(
+                `https://stpp-3qmk.onrender.com/api/Ticket/${id}`,
+                {
+                    method: "DELETE",
+                    headers: { Authorization: `Bearer ${token}` },
+                }
+            );
             if (res.ok) {
                 setMessage("Ticket deleted successfully");
                 const key = typeId || "uncategorized";
@@ -103,7 +106,7 @@ export default function AdminTicketsPage() {
         }
     };
 
-    // OPEN/CLOSE MODAL
+    // --- MODAL HANDLERS ---
     const openModal = (type, data = null) => {
         setModalType(type);
         setModalData(data);
@@ -113,7 +116,7 @@ export default function AdminTicketsPage() {
         setModalType(null);
     };
 
-    // SAVE MODAL DATA (create/update)
+    // --- SAVE MODAL (ADD/EDIT) ---
     const saveModal = async (e) => {
         e.preventDefault();
         try {
@@ -125,7 +128,10 @@ export default function AdminTicketsPage() {
 
                 const res = await fetch(url, {
                     method,
-                    headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
                     body: JSON.stringify({
                         id: modalData.id,
                         name: modalData.name,
@@ -145,7 +151,10 @@ export default function AdminTicketsPage() {
 
                 const res = await fetch(url, {
                     method,
-                    headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
                     body: JSON.stringify(modalData),
                 });
                 if (res.ok) {
@@ -183,18 +192,17 @@ export default function AdminTicketsPage() {
                 </div>
             </header>
 
-            {/* MAIN CONTENT */}
+            {/* MAIN GRID */}
             <main
                 className="main-content"
                 style={{
-                    display: "flex",
-                    flexWrap: "wrap",
+                    display: "grid",
+                    gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
                     gap: "1rem",
                     padding: "1rem",
-                    justifyContent: "flex-start",
                 }}
             >
-                {/* TYPES */}
+                {/* TYPE CARDS */}
                 {types.map((type) => (
                     <div
                         key={type.id}
@@ -203,36 +211,120 @@ export default function AdminTicketsPage() {
                             padding: "1rem",
                             borderRadius: "8px",
                             boxShadow: "0 0 10px rgba(0,0,0,0.3)",
+                            height: "350px",
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "space-between",
                         }}
                     >
-                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                            <div>
-                                <h3 style={{ marginBottom: "0.3rem" }}>{type.name}</h3>
-                                {type.description && (
-                                    <p style={{ fontSize: "0.9rem", color: "#aaa", marginBottom: "0.5rem" }}>
-                                        {type.description}
-                                    </p>
-                                )}
+                        <div>
+                            <div
+                                style={{
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                    alignItems: "center",
+                                }}
+                            >
+                                <div>
+                                    <h3 style={{ marginBottom: "0.3rem" }}>{type.name}</h3>
+                                    {type.description && (
+                                        <p
+                                            style={{
+                                                fontSize: "0.9rem",
+                                                color: "#aaa",
+                                                marginBottom: "0.5rem",
+                                            }}
+                                        >
+                                            {type.description}
+                                        </p>
+                                    )}
+                                </div>
+                                <div>
+                                    <button onClick={() => openModal("type", type)}>
+                                        <FaEdit />
+                                    </button>
+                                    <button onClick={() => handleDeleteType(type.id)}>
+                                        <FaTrash />
+                                    </button>
+                                </div>
                             </div>
-                            <div>
-                                <button onClick={() => openModal("type", type)}>
-                                    <FaEdit />
-                                </button>
-                                <button onClick={() => handleDeleteType(type.id)}>
-                                    <FaTrash />
-                                </button>
+
+                            <div
+                                style={{
+                                    overflowY: "auto",
+                                    maxHeight: "200px",
+                                    marginTop: "0.5rem",
+                                }}
+                            >
+                                {(tickets[type.id] || []).map((t) => (
+                                    <div
+                                        key={t.id}
+                                        style={{
+                                            background: "#2a2a2a",
+                                            padding: "0.5rem",
+                                            margin: "0.5rem 0",
+                                            borderRadius: "5px",
+                                            cursor: "pointer",
+                                        }}
+                                        onClick={() => openModal("ticket", t)}
+                                    >
+                                        {t.title}
+                                        <button
+                                            style={{ float: "right" }}
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                handleDeleteTicket(t.id, type.id);
+                                            }}
+                                        >
+                                            <FaTrash />
+                                        </button>
+                                    </div>
+                                ))}
                             </div>
                         </div>
 
-                        <button
-                            style={{ marginTop: "0.5rem" }}
-                            onClick={() => openModal("ticket", { typeId: type.id })}
-                        >
+                        <button onClick={() => openModal("ticket", { typeId: type.id })}>
                             <FaPlus /> Add Ticket
                         </button>
+                    </div>
+                ))}
 
-                        <div style={{ marginTop: "1rem" }}>
-                            {(tickets[type.id] || []).map((t) => (
+                {/* UNCATEGORIZED CARD */}
+                <div
+                    key="uncategorized"
+                    style={{
+                        background: "#1e1e1e",
+                        padding: "1rem",
+                        borderRadius: "8px",
+                        boxShadow: "0 0 10px rgba(0,0,0,0.3)",
+                        height: "350px",
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "space-between",
+                    }}
+                >
+                    <div>
+                        <div
+                            style={{
+                                display: "flex",
+                                justifyContent: "space-between",
+                                alignItems: "center",
+                            }}
+                        >
+                            <h3>Uncategorized</h3>
+                            <button onClick={() => openModal("ticket", { typeId: null })}>
+                                <FaPlus /> Add Ticket
+                            </button>
+                        </div>
+
+                        <div
+                            style={{
+                                overflowY: "auto",
+                                maxHeight: "200px",
+                                marginTop: "0.5rem",
+                            }}
+                        >
+                            {(tickets["uncategorized"] || []).map((t) => (
                                 <div
                                     key={t.id}
                                     style={{
@@ -249,7 +341,7 @@ export default function AdminTicketsPage() {
                                         style={{ float: "right" }}
                                         onClick={(e) => {
                                             e.stopPropagation();
-                                            handleDeleteTicket(t.id, type.id);
+                                            handleDeleteTicket(t.id, null);
                                         }}
                                     >
                                         <FaTrash />
@@ -257,51 +349,6 @@ export default function AdminTicketsPage() {
                                 </div>
                             ))}
                         </div>
-                    </div>
-                ))}
-
-                {/* UNCATEGORIZED SECTION */}
-                <div
-                    key="uncategorized"
-                    style={{
-                        background: "#1e1e1e",
-                        padding: "1rem",
-                        borderRadius: "8px",
-                        boxShadow: "0 0 10px rgba(0,0,0,0.3)",
-                    }}
-                >
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                        <h3>Uncategorized</h3>
-                        <button onClick={() => openModal("ticket", { typeId: null })}>
-                            <FaPlus /> Add Ticket
-                        </button>
-                    </div>
-
-                    <div style={{ marginTop: "1rem" }}>
-                        {(tickets["uncategorized"] || []).map((t) => (
-                            <div
-                                key={t.id}
-                                style={{
-                                    background: "#2a2a2a",
-                                    padding: "0.5rem",
-                                    margin: "0.5rem 0",
-                                    borderRadius: "5px",
-                                    cursor: "pointer",
-                                }}
-                                onClick={() => openModal("ticket", t)}
-                            >
-                                {t.title}
-                                <button
-                                    style={{ float: "right" }}
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        handleDeleteTicket(t.id, null);
-                                    }}
-                                >
-                                    <FaTrash />
-                                </button>
-                            </div>
-                        ))}
                     </div>
                 </div>
             </main>
@@ -322,19 +369,28 @@ export default function AdminTicketsPage() {
                                     <input
                                         type="text"
                                         value={modalData.name || ""}
-                                        onChange={(e) => setModalData({ ...modalData, name: e.target.value })}
+                                        onChange={(e) =>
+                                            setModalData({ ...modalData, name: e.target.value })
+                                        }
                                         required
-                                    /><br></br>
-
+                                    />
+                                    <br />
                                     <label>Description</label>
                                     <textarea
                                         value={modalData.description || ""}
-                                        onChange={(e) => setModalData({ ...modalData, description: e.target.value })}
+                                        onChange={(e) =>
+                                            setModalData({
+                                                ...modalData,
+                                                description: e.target.value,
+                                            })
+                                        }
                                         rows={3}
                                         placeholder="Enter description..."
-                                    /><br></br>
+                                    />
+                                    <br />
                                 </>
                             )}
+
                             {modalType === "ticket" && (
                                 <>
                                     <h3>{modalData.id ? "Edit Ticket" : "Add Ticket"}</h3>
@@ -342,24 +398,37 @@ export default function AdminTicketsPage() {
                                         type="text"
                                         placeholder="Title"
                                         value={modalData.title || ""}
-                                        onChange={(e) => setModalData({ ...modalData, title: e.target.value })}
+                                        onChange={(e) =>
+                                            setModalData({ ...modalData, title: e.target.value })
+                                        }
                                         required
-                                    /><br></br>
+                                    />
+                                    <br />
                                     <textarea
                                         placeholder="Description"
                                         value={modalData.description || ""}
-                                        onChange={(e) => setModalData({ ...modalData, description: e.target.value })}
+                                        onChange={(e) =>
+                                            setModalData({
+                                                ...modalData,
+                                                description: e.target.value,
+                                            })
+                                        }
                                         rows={3}
-                                    /><br></br>
+                                    />
+                                    <br />
                                     <select
                                         value={modalData.status || "Open"}
-                                        onChange={(e) => setModalData({ ...modalData, status: e.target.value })}
+                                        onChange={(e) =>
+                                            setModalData({ ...modalData, status: e.target.value })
+                                        }
                                     >
                                         <option value="Open">Open</option>
                                         <option value="Closed">Closed</option>
-                                    </select><br></br>
+                                    </select>
+                                    <br />
                                 </>
                             )}
+
                             <button type="submit" className="btn">
                                 Save
                             </button>
