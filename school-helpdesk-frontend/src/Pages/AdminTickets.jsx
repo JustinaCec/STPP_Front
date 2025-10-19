@@ -127,6 +127,7 @@ export default function AdminTicketsPage() {
                     method,
                     headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
                     body: JSON.stringify({
+                        id: modalData.id,
                         name: modalData.name,
                         description: modalData.description,
                     }),
@@ -186,10 +187,11 @@ export default function AdminTicketsPage() {
             <main
                 className="main-content"
                 style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))",
+                    display: "flex",
+                    flexWrap: "wrap",
                     gap: "1rem",
                     padding: "1rem",
+                    justifyContent: "flex-start",
                 }}
             >
                 {/* TYPES */}
@@ -322,7 +324,7 @@ export default function AdminTicketsPage() {
                                         value={modalData.name || ""}
                                         onChange={(e) => setModalData({ ...modalData, name: e.target.value })}
                                         required
-                                    />
+                                    /><br></br>
 
                                     <label>Description</label>
                                     <textarea
@@ -330,7 +332,7 @@ export default function AdminTicketsPage() {
                                         onChange={(e) => setModalData({ ...modalData, description: e.target.value })}
                                         rows={3}
                                         placeholder="Enter description..."
-                                    />
+                                    /><br></br>
                                 </>
                             )}
                             {modalType === "ticket" && (
@@ -342,20 +344,20 @@ export default function AdminTicketsPage() {
                                         value={modalData.title || ""}
                                         onChange={(e) => setModalData({ ...modalData, title: e.target.value })}
                                         required
-                                    />
+                                    /><br></br>
                                     <textarea
                                         placeholder="Description"
                                         value={modalData.description || ""}
                                         onChange={(e) => setModalData({ ...modalData, description: e.target.value })}
                                         rows={3}
-                                    />
+                                    /><br></br>
                                     <select
                                         value={modalData.status || "Open"}
                                         onChange={(e) => setModalData({ ...modalData, status: e.target.value })}
                                     >
                                         <option value="Open">Open</option>
                                         <option value="Closed">Closed</option>
-                                    </select>
+                                    </select><br></br>
                                 </>
                             )}
                             <button type="submit" className="btn">
