@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FaPlus, FaEdit, FaTrash } from "react-icons/fa";
 import "./global.css";
 import logo from "../assets/logo.png";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 export default function AdminTicketsPage() {
     const [types, setTypes] = useState([]);
