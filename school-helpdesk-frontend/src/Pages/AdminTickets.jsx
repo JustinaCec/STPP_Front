@@ -307,7 +307,7 @@ export default function AdminTicketsPage() {
                                     borderRadius: "5px",
                                     cursor: "pointer",
                                 }}
-                                onClick={() => openModal("ticket", t)}
+                                onClick={() => navigate(`/ticket/${t.id}`)}
                             >
                                 {t.title}
                                 <button
@@ -342,7 +342,7 @@ export default function AdminTicketsPage() {
                                         value={modalData.name || ""}
                                         onChange={(e) => setModalData({ ...modalData, name: e.target.value })}
                                         required
-                                    />
+                                    /><br></br>
                                     <textarea
                                         placeholder="Description"
                                         value={modalData.description || ""}
@@ -350,7 +350,7 @@ export default function AdminTicketsPage() {
                                             setModalData({ ...modalData, description: e.target.value })
                                         }
                                         rows={3}
-                                    />
+                                    /><br></br>
                                 </>
                             )}
                             {modalType === "ticket" && (
@@ -362,7 +362,7 @@ export default function AdminTicketsPage() {
                                         value={modalData.title || ""}
                                         onChange={(e) => setModalData({ ...modalData, title: e.target.value })}
                                         required
-                                    />
+                                    /><br></br>
                                     <textarea
                                         placeholder="Description"
                                         value={modalData.description || ""}
@@ -370,7 +370,7 @@ export default function AdminTicketsPage() {
                                             setModalData({ ...modalData, description: e.target.value })
                                         }
                                         rows={3}
-                                    />
+                                    /><br></br>
                                     <select
                                         value={modalData.status || "Open"}
                                         onChange={(e) =>
@@ -380,7 +380,7 @@ export default function AdminTicketsPage() {
                                         <option value="Open">Open</option>
                                         <option value="Closed">Closed</option>
                                     </select>
-                                </>
+                                </><br></br>
                             )}
                             <button type="submit" className="btn">
                                 Save

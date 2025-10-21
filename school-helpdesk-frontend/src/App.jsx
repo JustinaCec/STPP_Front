@@ -5,6 +5,7 @@ import Register from "./Pages/Register";
 import Login from "./Pages/Login";
 import Admin from "./Pages/AdminUser";
 import Tickets from "./Pages/AdminTickets";
+import TicketDetails from "./Pages/Ticket";
 
 export default function App() {
     return (
@@ -15,6 +16,7 @@ export default function App() {
                 <Route path="/register" element={<Register />} />
                 <Route path="/admin" element={<Admin />} />
                 <Route path="/tickets" element={<Tickets />} />
+                <Route path="/ticket/:id" element={<TicketDetails />} />
             </Routes>
         </Router>
     );
