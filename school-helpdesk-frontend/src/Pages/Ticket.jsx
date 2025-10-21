@@ -17,17 +17,16 @@ export default function TicketDetailsPage() {
     const navigate = useNavigate();
 
     // Fetch current user ID
-    const fetchCurrentUser = async () => {
-        try {
-            const res = await fetch("https://stpp-3qmk.onrender.com/api/User/me", {
-                headers: { Authorization: `Bearer ${token}` },
-            });
-            const data = await res.json();
-            if (res.ok) setUserId(data.id);
-        } catch (err) {
-            console.error("Failed to fetch user:", err);
+    useEffect(() => {
+        if (token) {
+            try {
+                const payload = JSON.parse(atob(token.split(".")[1]));
+                setUserId(payload.id || payload.userId);
+            } catch (err) {
+                console.error("Failed to parse token:", err);
+            }
         }
-    };
+    }, [token]);
 
     // Fetch ticket details
     const fetchTicket = async () => {
