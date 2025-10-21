@@ -21,8 +21,8 @@ export default function TicketDetailsPage() {
         if (token) {
             try {
                 const payload = JSON.parse(atob(token.split(".")[1]));
-                setUserId(payload.id || payload.userId);
-                console.log(payload); // debug here
+                setUserId(payload.id);
+                console.log(userId); // debug here
             } catch (err) {
                 console.error("Failed to parse token:", err);
             }
@@ -83,7 +83,7 @@ export default function TicketDetailsPage() {
         try {
             const payload = {
                 id: editedData.id,
-                userId: editedData.userId || 0,
+                userId: userId,
                 typeId: Number(editedData.typeId) || 0, // ensure number
                 title: editedData.title || "",
                 description: editedData.description || "",
