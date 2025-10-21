@@ -80,7 +80,6 @@ export default function TicketDetailsPage() {
     // Save edited ticket
     const handleSaveTicket = async () => {
         try {
-            console.log("Current ticket data:", editedData); // debug here
             const payload = {
                 id: editedData.id,
                 userId: editedData.userId || 0,
@@ -95,16 +94,17 @@ export default function TicketDetailsPage() {
                     body: c.body || c.text || "",
                 })),
             };
-            console.log("Current ticket data:", payload); // debug here
-            const res = await fetch(`https://stpp-3qmk.onrender.com/api/Ticket/${ticket.id}`, {
+            
+            const res = await fetch(`https://stpp-3qmk.onrender.com/api/Ticket/${id}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${token}`,
                 },
                 body: JSON.stringify(payload),
-            });
 
+            });
+            console.log("Current ticket data:", JSON.stringify(payload)); // debug here
             if (res.ok) {
                 setMessage("Ticket updated successfully!");
                 setEditing(false);
