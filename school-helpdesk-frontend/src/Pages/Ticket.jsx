@@ -80,6 +80,7 @@ export default function TicketDetailsPage() {
     // Save edited ticket
     const handleSaveTicket = async () => {
         try {
+            console.log("Current ticket data:", editedData); // debug here
             const payload = {
                 id: editedData.id,
                 userId: editedData.userId || 0,
@@ -94,7 +95,7 @@ export default function TicketDetailsPage() {
                     body: c.body || c.text || "",
                 })),
             };
-
+            console.log("Current ticket data:", payload); // debug here
             const res = await fetch(`https://stpp-3qmk.onrender.com/api/Ticket/${ticket.id}`, {
                 method: "PUT",
                 headers: {
@@ -204,7 +205,7 @@ export default function TicketDetailsPage() {
                         <select
                             value={editedData.status}
                                 onChange={(e) => {
-                                    console.log("Current ticket data:", e.target.value); // debug here
+                                    
                                     setEditedData({ ...editedData, status: e.target.value });
                                 }}
                             style={{ marginBottom: "0.5rem" }}
@@ -215,8 +216,9 @@ export default function TicketDetailsPage() {
                         <select
                             value={editedData.typeId}
                                 onChange={(e) => {
-                                    console.log("Current ticket data:", e.target.value); // debug here
+                                    
                                     setEditedData({ ...editedData, typeId: Number(e.target.value) })
+
                                 }
                                 }
                             style={{ marginBottom: "0.5rem" }}
