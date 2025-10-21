@@ -37,7 +37,7 @@ export default function AdminTicketsPage() {
         const uncategorizedTickets = [];
 
         try {
-            const res = await fetch("https://stpp-3qmk.onrender.com/api/Ticket", {
+            const res = await fetch("https://stpp-3qmk.onrender.com/api/Ticket/byType/${t.typeId}", {
                 headers: { Authorization: `Bearer ${token}` },
             });
             const allTickets = await res.json();
