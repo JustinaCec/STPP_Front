@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FaPlus, FaEdit, FaTrash, FaBars } from "react-icons/fa";
+import { FaPlus, FaEdit, FaTrash, FaBars, FaTimes } from "react-icons/fa";
 import "./global.css";
 import logo from "../assets/logo.png";
 import { useNavigate, Link } from "react-router-dom";
@@ -114,9 +114,26 @@ export default function AdminTicketsPage() {
         }
     };
 
+    // OPEN MODAL
     const openModal = (type, data = null) => {
+        if (type === "ticket") {
+            setModalData({
+                id: data?.id || 0,
+                userId: data?.userId || 0,
+                typeId: data?.typeId || 0,
+                title: data?.title || "",
+                description: data?.description || "",
+                status: data?.status || "Open",
+                comments: data?.comments || [],
+            });
+        } else if (type === "type") {
+            setModalData({
+                id: data?.id || 0,
+                name: data?.name || "",
+                description: data?.description || "",
+            });
+        }
         setModalType(type);
-        setModalData(data);
     };
 
     const closeModal = () => {
@@ -156,13 +173,16 @@ export default function AdminTicketsPage() {
                     ? `https://stpp-3qmk.onrender.com/api/Ticket/${modalData.id}`
                     : "https://stpp-3qmk.onrender.com/api/Ticket";
 
+                // Only send title, description, and typeId
+                const { title, description, typeId } = modalData;
+
                 const res = await fetch(url, {
                     method,
                     headers: {
                         "Content-Type": "application/json",
                         Authorization: `Bearer ${token}`,
                     },
-                    body: JSON.stringify(modalData),
+                    body: JSON.stringify({ title, description, typeId }),
                 });
                 if (res.ok) {
                     setMessage("Ticket saved successfully");
@@ -180,7 +200,9 @@ export default function AdminTicketsPage() {
         localStorage.removeItem("token");
         window.location.href = "/";
     };
+
     const toggleMenu = () => setMenuOpen(!menuOpen);
+
     const MessageModal = ({ message, onClose }) => {
         if (!message) return null;
         return (
@@ -349,7 +371,7 @@ export default function AdminTicketsPage() {
                                         value={modalData.name || ""}
                                         onChange={(e) => setModalData({ ...modalData, name: e.target.value })}
                                         required
-                                    /><br></br>
+                                    /><br />
                                     <textarea
                                         placeholder="Description"
                                         value={modalData.description || ""}
@@ -357,7 +379,7 @@ export default function AdminTicketsPage() {
                                             setModalData({ ...modalData, description: e.target.value })
                                         }
                                         rows={3}
-                                    /><br></br>
+                                    /><br />
                                 </>
                             )}
                             {modalType === "ticket" && (
@@ -369,7 +391,7 @@ export default function AdminTicketsPage() {
                                         value={modalData.title || ""}
                                         onChange={(e) => setModalData({ ...modalData, title: e.target.value })}
                                         required
-                                    />
+                                    /><br />
                                     <textarea
                                         placeholder="Description"
                                         value={modalData.description || ""}
@@ -377,16 +399,7 @@ export default function AdminTicketsPage() {
                                             setModalData({ ...modalData, description: e.target.value })
                                         }
                                         rows={3}
-                                    />
-                                    <select
-                                        value={modalData.status || "Open"}
-                                        onChange={(e) =>
-                                            setModalData({ ...modalData, status: e.target.value })
-                                        }
-                                    >
-                                        <option value="Open">Open</option>
-                                        <option value="Closed">Closed</option>
-                                    </select>
+                                    /><br />
                                 </>
                             )}
                             <button type="submit" className="btn">
@@ -398,6 +411,7 @@ export default function AdminTicketsPage() {
             )}
 
             <MessageModal message={message} onClose={() => setMessage("")} />
+
             {/* FOOTER */}
             <footer className="footer">
                 <p>
