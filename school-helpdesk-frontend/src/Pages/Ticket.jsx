@@ -203,7 +203,10 @@ export default function TicketDetailsPage() {
                         />
                         <select
                             value={editedData.status}
-                            onChange={(e) => setEditedData({ ...editedData, status: e.target.value })}
+                                onChange={(e) => {
+                                    console.log("Current ticket data:", e.target.value); // debug here
+                                    setEditedData({ ...editedData, status: e.target.value });
+                                }}
                             style={{ marginBottom: "0.5rem" }}
                         >
                             <option value="Open">Open</option>
@@ -211,7 +214,11 @@ export default function TicketDetailsPage() {
                         </select>
                         <select
                             value={editedData.typeId}
-                            onChange={(e) => setEditedData({ ...editedData, typeId: Number(e.target.value) })}
+                                onChange={(e) => {
+                                    console.log("Current ticket data:", e.target.value); // debug here
+                                    setEditedData({ ...editedData, typeId: Number(e.target.value) })
+                                }
+                                }
                             style={{ marginBottom: "0.5rem" }}
                         >
                             <option value="">Uncategorized</option>
