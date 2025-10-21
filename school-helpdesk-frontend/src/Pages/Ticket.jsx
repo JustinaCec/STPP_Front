@@ -12,6 +12,8 @@ export default function TicketDetailsPage() {
     const [newComment, setNewComment] = useState("");
     const [message, setMessage] = useState("");
     const [userId, setUserId] = useState(null);
+    const [editingCommentId, setEditingCommentId] = useState(null);
+    const [editedCommentText, setEditedCommentText] = useState("");
 
     const token = localStorage.getItem("token");
     const navigate = useNavigate();
@@ -22,7 +24,6 @@ export default function TicketDetailsPage() {
             try {
                 const payload = JSON.parse(atob(token.split(".")[1]));
                 setUserId(payload.id);
-                console.log(userId); // debug here
             } catch (err) {
                 console.error("Failed to parse token:", err);
             }
@@ -84,7 +85,7 @@ export default function TicketDetailsPage() {
             const payload = {
                 id: editedData.id,
                 userId: userId,
-                typeId: Number(editedData.typeId) || 0, // ensure number
+                typeId: Number(editedData.typeId) || 0,
                 title: editedData.title || "",
                 description: editedData.description || "",
                 status: editedData.status || "Open",
@@ -95,7 +96,7 @@ export default function TicketDetailsPage() {
                     body: c.body || c.text || "",
                 })),
             };
-            
+
             const res = await fetch(`https://stpp-3qmk.onrender.com/api/Ticket/${id}`, {
                 method: "PUT",
                 headers: {
@@ -103,9 +104,8 @@ export default function TicketDetailsPage() {
                     Authorization: `Bearer ${token}`,
                 },
                 body: JSON.stringify(payload),
-
             });
-            console.log("Current ticket data:", JSON.stringify(payload)); // debug here
+
             if (res.ok) {
                 setMessage("Ticket updated successfully!");
                 setEditing(false);
@@ -131,7 +131,7 @@ export default function TicketDetailsPage() {
                     Authorization: `Bearer ${token}`,
                 },
                 body: JSON.stringify({
-                    id: 0, // let backend assign ID
+                    id: 0,
                     ticketId: id,
                     userId: userId,
                     body: newComment,
@@ -161,6 +161,36 @@ export default function TicketDetailsPage() {
             if (res.ok) fetchComments();
         } catch (err) {
             console.error(err);
+        }
+    };
+
+    // Save edited comment
+    const handleSaveComment = async (commentId) => {
+        try {
+            const res = await fetch(`https://stpp-3qmk.onrender.com/api/tickets/${id}/Comment/${commentId}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({
+                    id: commentId,
+                    ticketId: id,
+                    userId: userId,
+                    body: editedCommentText,
+                }),
+            });
+            if (res.ok) {
+                setEditingCommentId(null);
+                setEditedCommentText("");
+                fetchComments();
+            } else {
+                const data = await res.json();
+                setMessage(data.message || "Failed to update comment");
+            }
+        } catch (err) {
+            console.error(err);
+            setMessage("Error updating comment");
         }
     };
 
@@ -205,10 +235,7 @@ export default function TicketDetailsPage() {
                         />
                         <select
                             value={editedData.status}
-                                onChange={(e) => {
-                                    
-                                    setEditedData({ ...editedData, status: e.target.value });
-                                }}
+                            onChange={(e) => setEditedData({ ...editedData, status: e.target.value })}
                             style={{ marginBottom: "0.5rem" }}
                         >
                             <option value="Open">Open</option>
@@ -216,28 +243,17 @@ export default function TicketDetailsPage() {
                         </select>
                         <select
                             value={editedData.typeId}
-                                onChange={(e) => {
-                                    
-                                    setEditedData({ ...editedData, typeId: Number(e.target.value) })
-
-                                }
-                                }
+                            onChange={(e) => setEditedData({ ...editedData, typeId: Number(e.target.value) })}
                             style={{ marginBottom: "0.5rem" }}
                         >
                             <option value="">Uncategorized</option>
                             {types.map((t) => (
-                                <option key={t.id} value={t.id}>
-                                    {t.name}
-                                </option>
+                                <option key={t.id} value={t.id}>{t.name}</option>
                             ))}
                         </select>
                         <div>
-                            <button onClick={handleSaveTicket}>
-                                <FaSave /> Save
-                            </button>
-                            <button onClick={() => setEditing(false)} style={{ marginLeft: "0.5rem" }}>
-                                Cancel
-                            </button>
+                            <button onClick={handleSaveTicket}><FaSave /> Save</button>
+                            <button onClick={() => setEditing(false)} style={{ marginLeft: "0.5rem" }}>Cancel</button>
                         </div>
                     </>
                 )}
@@ -245,44 +261,30 @@ export default function TicketDetailsPage() {
 
             <div style={{ marginTop: "2rem" }}>
                 <h3>Comments</h3>
-                <div
-                    style={{
-                        background: "#1e1e1e",
-                        padding: "1rem",
-                        borderRadius: "8px",
-                        maxHeight: "300px",
-                        overflowY: "auto",
-                    }}
-                >
+                <div style={{ background: "#1e1e1e", padding: "1rem", borderRadius: "8px", maxHeight: "300px", overflowY: "auto" }}>
                     {comments.length === 0 ? (
                         <p>No comments yet.</p>
                     ) : (
                         comments.map((c) => (
-                            <div
-                                key={c.id}
-                                style={{
-                                    background: "#2a2a2a",
-                                    margin: "0.5rem 0",
-                                    padding: "0.5rem",
-                                    borderRadius: "5px",
-                                    position: "relative",
-                                }}
-                            >
-                                <p>{c.body || c.text}</p>
-                                <button
-                                    style={{
-                                        position: "absolute",
-                                        top: "5px",
-                                        right: "5px",
-                                        background: "transparent",
-                                        border: "none",
-                                        color: "red",
-                                        cursor: "pointer",
-                                    }}
-                                    onClick={() => handleDeleteComment(c.id)}
-                                >
-                                    <FaTrash />
-                                </button>
+                            <div key={c.id} style={{ background: "#2a2a2a", margin: "0.5rem 0", padding: "0.5rem", borderRadius: "5px", position: "relative" }}>
+                                {editingCommentId === c.id ? (
+                                    <>
+                                        <textarea
+                                            value={editedCommentText}
+                                            onChange={(e) => setEditedCommentText(e.target.value)}
+                                            rows={2}
+                                            style={{ width: "100%" }}
+                                        />
+                                        <button onClick={() => handleSaveComment(c.id)} style={{ marginRight: "0.5rem" }}>Save</button>
+                                        <button onClick={() => setEditingCommentId(null)}>Cancel</button>
+                                    </>
+                                ) : (
+                                    <>
+                                        <p>{c.body || c.text}</p>
+                                        <button onClick={() => { setEditingCommentId(c.id); setEditedCommentText(c.body); }} style={{ marginRight: "0.5rem" }}>Edit</button>
+                                        <button onClick={() => handleDeleteComment(c.id)}>Delete</button>
+                                    </>
+                                )}
                             </div>
                         ))
                     )}
@@ -296,21 +298,12 @@ export default function TicketDetailsPage() {
                         placeholder="Write a comment..."
                         style={{ width: "100%", marginBottom: "0.5rem" }}
                     />
-                    <button onClick={handleAddComment}>
-                        <FaPlus /> Add Comment
-                    </button>
+                    <button onClick={handleAddComment}><FaPlus /> Add Comment</button>
                 </div>
             </div>
 
             {message && (
-                <div
-                    style={{
-                        background: "#333",
-                        padding: "0.5rem 1rem",
-                        borderRadius: "5px",
-                        marginTop: "1rem",
-                    }}
-                >
+                <div style={{ background: "#333", padding: "0.5rem 1rem", borderRadius: "5px", marginTop: "1rem" }}>
                     {message}
                 </div>
             )}
