@@ -353,35 +353,6 @@ export default function AdminTicketsPage() {
                                     /><br></br>
                                 </>
                             )}
-                            {modalType === "ticket" && (
-                                <>
-                                    <h3>{modalData.id ? "Edit Ticket" : "Add Ticket"}</h3>
-                                    <input
-                                        type="text"
-                                        placeholder="Title"
-                                        value={modalData.title || ""}
-                                        onChange={(e) => setModalData({ ...modalData, title: e.target.value })}
-                                        required
-                                    /><br></br>
-                                    <textarea
-                                        placeholder="Description"
-                                        value={modalData.description || ""}
-                                        onChange={(e) =>
-                                            setModalData({ ...modalData, description: e.target.value })
-                                        }
-                                        rows={3}
-                                    /><br></br>
-                                    <select
-                                        value={modalData.status || "Open"}
-                                        onChange={(e) =>
-                                            setModalData({ ...modalData, status: e.target.value })
-                                        }
-                                    >
-                                        <option value="Open">Open</option>
-                                        <option value="Closed">Closed</option>
-                                    </select>
-                                </><br></br>
-                            )}
                             <button type="submit" className="btn">
                                 Save
                             </button>
