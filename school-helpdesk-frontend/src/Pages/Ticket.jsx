@@ -1,9 +1,9 @@
 ﻿import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { FaEdit, FaTrash, FaSave, FaArrowLeft } from "react-icons/fa";
+import { FaPlus, FaEdit, FaTrash, FaSave, FaArrowLeft } from "react-icons/fa";
 
 export default function TicketDetailsPage() {
-    const { id } = useParams();
+    const { id } = useParams(); // ticketId
     const [ticket, setTicket] = useState(null);
     const [types, setTypes] = useState([]);
     const [comments, setComments] = useState([]);
@@ -47,7 +47,7 @@ export default function TicketDetailsPage() {
     // Fetch comments
     const fetchComments = async () => {
         try {
-            const res = await fetch(`https://stpp-3qmk.onrender.com/api/Comment?ticketId=${id}`, {
+            const res = await fetch(`https://stpp-3qmk.onrender.com/api/tickets/${id}/comment`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
             const data = await res.json();
@@ -92,13 +92,13 @@ export default function TicketDetailsPage() {
     const handleAddComment = async () => {
         if (!newComment.trim()) return;
         try {
-            const res = await fetch(`https://stpp-3qmk.onrender.com/api/Comment`, {
+            const res = await fetch(`https://stpp-3qmk.onrender.com/api/tickets/${id}/comment`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${token}`,
                 },
-                body: JSON.stringify({ ticketId: id, text: newComment }),
+                body: JSON.stringify({ body: newComment }),
             });
             if (res.ok) {
                 setNewComment("");
@@ -116,7 +116,7 @@ export default function TicketDetailsPage() {
     const handleDeleteComment = async (commentId) => {
         if (!window.confirm("Delete this comment?")) return;
         try {
-            const res = await fetch(`https://stpp-3qmk.onrender.com/api/Comment/${commentId}`, {
+            const res = await fetch(`https://stpp-3qmk.onrender.com/api/tickets/${id}/comment/${commentId}`, {
                 method: "DELETE",
                 headers: { Authorization: `Bearer ${token}` },
             });
@@ -221,7 +221,7 @@ export default function TicketDetailsPage() {
                                     borderRadius: "5px",
                                 }}
                             >
-                                <p>{c.text}</p>
+                                <p>{c.body}</p>
                                 <button
                                     style={{ float: "right", background: "transparent", border: "none", color: "red" }}
                                     onClick={() => handleDeleteComment(c.id)}
