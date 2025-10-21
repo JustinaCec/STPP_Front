@@ -13,9 +13,21 @@ export default function AdminTicketsPage() {
     const [modalType, setModalType] = useState(null);
     const navigate = useNavigate();
     const [menuOpen, setMenuOpen] = useState(false);
+    const [userId, setUserId] = useState(null);
 
     const token = localStorage.getItem("token");
 
+    // Extract userId from JWT token
+    useEffect(() => {
+        if (token) {
+            try {
+                const payload = JSON.parse(atob(token.split(".")[1]));
+                setUserId(payload.id);
+            } catch (err) {
+                console.error("Failed to parse token:", err);
+            }
+        }
+    }, [token]);
     // FETCH TYPES
     const fetchTypes = async () => {
         try {
@@ -125,7 +137,7 @@ export default function AdminTicketsPage() {
         if (type === "ticket") {
             setModalData({
                 id: data?.id || 0,
-                userId: data?.userId || 0,
+                userId: userId,
                 typeId: data?.typeId || 0,
                 title: data?.title || "",
                 description: data?.description || "",
