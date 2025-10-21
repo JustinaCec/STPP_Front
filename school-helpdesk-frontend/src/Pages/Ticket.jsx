@@ -16,7 +16,7 @@ export default function TicketDetailsPage() {
     const token = localStorage.getItem("token");
     const navigate = useNavigate();
 
-    // Fetch current user ID
+    // Extract userId from JWT token
     useEffect(() => {
         if (token) {
             try {
@@ -83,7 +83,7 @@ export default function TicketDetailsPage() {
             const payload = {
                 id: editedData.id,
                 userId: editedData.userId || 0,
-                typeId: editedData.typeId || 0,
+                typeId: Number(editedData.typeId) || 0, // ensure number
                 title: editedData.title || "",
                 description: editedData.description || "",
                 status: editedData.status || "Open",
@@ -129,7 +129,7 @@ export default function TicketDetailsPage() {
                     Authorization: `Bearer ${token}`,
                 },
                 body: JSON.stringify({
-                    id: 0,          // let backend assign real ID
+                    id: 0, // let backend assign ID
                     ticketId: id,
                     userId: userId,
                     body: newComment,
@@ -211,7 +211,7 @@ export default function TicketDetailsPage() {
                         </select>
                         <select
                             value={editedData.typeId || ""}
-                            onChange={(e) => setEditedData({ ...editedData, typeId: e.target.value })}
+                            onChange={(e) => setEditedData({ ...editedData, typeId: Number(e.target.value) })}
                             style={{ marginBottom: "0.5rem" }}
                         >
                             <option value="">Uncategorized</option>
