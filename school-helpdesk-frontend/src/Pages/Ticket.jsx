@@ -72,7 +72,6 @@ export default function TicketDetailsPage() {
     };
 
     useEffect(() => {
-        fetchCurrentUser();
         fetchTicket();
         fetchTypes();
         fetchComments();
