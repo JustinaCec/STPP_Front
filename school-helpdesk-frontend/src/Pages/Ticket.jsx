@@ -11,8 +11,23 @@ export default function TicketDetailsPage() {
     const [editedData, setEditedData] = useState({});
     const [newComment, setNewComment] = useState("");
     const [message, setMessage] = useState("");
+    const [userId, setUserId] = useState(null);
+
     const token = localStorage.getItem("token");
     const navigate = useNavigate();
+
+    // Fetch current user ID
+    const fetchCurrentUser = async () => {
+        try {
+            const res = await fetch("https://stpp-3qmk.onrender.com/api/User/me", {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+            const data = await res.json();
+            if (res.ok) setUserId(data.id);
+        } catch (err) {
+            console.error("Failed to fetch user:", err);
+        }
+    };
 
     // Fetch ticket details
     const fetchTicket = async () => {
@@ -58,6 +73,7 @@ export default function TicketDetailsPage() {
     };
 
     useEffect(() => {
+        fetchCurrentUser();
         fetchTicket();
         fetchTypes();
         fetchComments();
@@ -106,15 +122,20 @@ export default function TicketDetailsPage() {
 
     // Add new comment
     const handleAddComment = async () => {
-        if (!newComment.trim()) return;
+        if (!newComment.trim() || !userId) return;
         try {
-            const res = await fetch(`https://stpp-3qmk.onrender.com/api/tickets/${id}/Comment`, {
+            const res = await fetch(`https://stpp-3qmk.onrender.com/api/Comment`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${token}`,
                 },
-                body: JSON.stringify({ ticketId: id, body: newComment }),
+                body: JSON.stringify({
+                    id: 0,          // let backend assign real ID
+                    ticketId: id,
+                    userId: userId,
+                    body: newComment,
+                }),
             });
             if (res.ok) {
                 setNewComment("");
@@ -133,7 +154,7 @@ export default function TicketDetailsPage() {
     const handleDeleteComment = async (commentId) => {
         if (!window.confirm("Delete this comment?")) return;
         try {
-            const res = await fetch(`https://stpp-3qmk.onrender.com/api/tickets/${id}/Comment/${commentId}`, {
+            const res = await fetch(`https://stpp-3qmk.onrender.com/api/Comment/${commentId}`, {
                 method: "DELETE",
                 headers: { Authorization: `Bearer ${token}` },
             });
