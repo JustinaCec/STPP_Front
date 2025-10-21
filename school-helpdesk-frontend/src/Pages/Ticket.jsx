@@ -202,7 +202,7 @@ export default function TicketDetailsPage() {
                             style={{ width: "100%", marginBottom: "0.5rem" }}
                         />
                         <select
-                            value={editedData.status || "Open"}
+                            value={editedData.status}
                             onChange={(e) => setEditedData({ ...editedData, status: e.target.value })}
                             style={{ marginBottom: "0.5rem" }}
                         >
@@ -210,7 +210,7 @@ export default function TicketDetailsPage() {
                             <option value="Closed">Closed</option>
                         </select>
                         <select
-                            value={editedData.typeId || ""}
+                            value={editedData.typeId}
                             onChange={(e) => setEditedData({ ...editedData, typeId: Number(e.target.value) })}
                             style={{ marginBottom: "0.5rem" }}
                         >
