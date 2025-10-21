@@ -47,7 +47,7 @@ export default function TicketDetailsPage() {
     // Fetch comments
     const fetchComments = async () => {
         try {
-            const res = await fetch(`https://stpp-3qmk.onrender.com/api/Comment?ticketId=${id}`, {
+            const res = await fetch(`https://stpp-3qmk.onrender.com/api/tickets/${id}/Comment`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
             const data = await res.json();
@@ -108,7 +108,7 @@ export default function TicketDetailsPage() {
     const handleAddComment = async () => {
         if (!newComment.trim()) return;
         try {
-            const res = await fetch(`https://stpp-3qmk.onrender.com/api/Comment`, {
+            const res = await fetch(`https://stpp-3qmk.onrender.com/api/ticket/${id}/Comment`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -133,7 +133,7 @@ export default function TicketDetailsPage() {
     const handleDeleteComment = async (commentId) => {
         if (!window.confirm("Delete this comment?")) return;
         try {
-            const res = await fetch(`https://stpp-3qmk.onrender.com/api/Comment/${commentId}`, {
+            const res = await fetch(`https://stpp-3qmk.onrender.com/api/ticket/${id}/Comment/${commentId}`, {
                 method: "DELETE",
                 headers: { Authorization: `Bearer ${token}` },
             });
