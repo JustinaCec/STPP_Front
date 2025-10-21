@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FaPlus, FaEdit, FaTrash } from "react-icons/fa";
 import "./global.css";
 import logo from "../assets/logo.png";
+import { useNavigate } from "react-router-dom";
 
 export default function AdminTicketsPage() {
     const [types, setTypes] = useState([]);
@@ -10,6 +11,7 @@ export default function AdminTicketsPage() {
     const [message, setMessage] = useState("");
     const [modalData, setModalData] = useState(null);
     const [modalType, setModalType] = useState(null);
+    const navigate = useNavigate();
 
     const token = localStorage.getItem("token");
 
