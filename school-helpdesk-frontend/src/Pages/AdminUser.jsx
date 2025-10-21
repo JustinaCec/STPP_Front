@@ -139,17 +139,22 @@ export default function AdminPage() {
         <div className="landing-page">
             {/* HEADER */}
             {/* HEADER */}
-            <header
-                className="header"
-            >
+            <header className="header">
                 <div className="logo">
                     <img src={logo} alt="Logo" className="logo-img" />
                 </div>
-                <div>
-                    <Link to="/tickets">Tickets</Link>
-                    <button onClick={handleLogout} className="btn">
+
+                <nav className={`nav-links ${menuOpen ? "active" : ""}`}>
+                    <Link to="/tickets" onClick={() => setMenuOpen(false)}>Tickets</Link>
+                    <button onClick={() => { handleLogout(); setMenuOpen(false); }} className="btn">
                         Logout
                     </button>
+                </nav>
+
+                <div className="header-controls">
+                    <div className="hamburger" onClick={toggleMenu}>
+                        {menuOpen ? <FaTimes /> : <FaBars />}
+                    </div>
                 </div>
             </header>
 

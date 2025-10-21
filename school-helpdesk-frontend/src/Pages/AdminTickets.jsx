@@ -12,6 +12,7 @@ export default function AdminTicketsPage() {
     const [modalData, setModalData] = useState(null);
     const [modalType, setModalType] = useState(null);
     const navigate = useNavigate();
+    const [menuOpen, setMenuOpen] = useState(false);
 
     const token = localStorage.getItem("token");
 
@@ -179,7 +180,7 @@ export default function AdminTicketsPage() {
         localStorage.removeItem("token");
         window.location.href = "/";
     };
-
+    const toggleMenu = () => setMenuOpen(!menuOpen);
     const MessageModal = ({ message, onClose }) => {
         if (!message) return null;
         return (
@@ -197,20 +198,29 @@ export default function AdminTicketsPage() {
     return (
         <div className="landing-page">
             {/* HEADER */}
-            <header
-                className="header"
-            >
+            <header className="header">
                 <div className="logo">
                     <img src={logo} alt="Logo" className="logo-img" />
                 </div>
-                <div>
-                    <Link to="/admin">Users</Link>
-                    <button onClick={() => openModal("type", {})} className="btn" style={{ marginRight: "1rem" }}>
+
+                <nav className={`nav-links ${menuOpen ? "active" : ""}`}>
+                    <Link to="/admin" onClick={() => setMenuOpen(false)}>Users</Link>
+                    <button
+                        onClick={() => { openModal("type", {}); setMenuOpen(false); }}
+                        className="btn"
+                        style={{ marginRight: "1rem" }}
+                    >
                         <FaPlus /> Create Type
                     </button>
-                    <button onClick={handleLogout} className="btn">
+                    <button onClick={() => { handleLogout(); setMenuOpen(false); }} className="btn">
                         Logout
                     </button>
+                </nav>
+
+                <div className="header-controls">
+                    <div className="hamburger" onClick={toggleMenu}>
+                        {menuOpen ? <FaTimes /> : <FaBars />}
+                    </div>
                 </div>
             </header>
 
