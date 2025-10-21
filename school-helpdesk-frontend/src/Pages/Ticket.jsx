@@ -1,40 +1,40 @@
 ﻿import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { FaTrash } from "react-icons/fa";
-import "./global.css";
+import { FaPlus, FaEdit, FaTrash, FaSave, FaArrowLeft } from "react-icons/fa";
 
-export default function TicketPage() {
+export default function TicketDetailsPage() {
     const { id } = useParams();
-    const navigate = useNavigate();
-    const token = localStorage.getItem("token");
-
     const [ticket, setTicket] = useState(null);
     const [types, setTypes] = useState([]);
     const [comments, setComments] = useState([]);
+    const [editing, setEditing] = useState(false);
+    const [editedData, setEditedData] = useState({});
     const [newComment, setNewComment] = useState("");
     const [message, setMessage] = useState("");
+    const token = localStorage.getItem("token");
+    const navigate = useNavigate();
 
-    const apiBase = "https://stpp-3qmk.onrender.com/api";
-
-    // --- Fetch ticket ---
+    // Fetch ticket details
     const fetchTicket = async () => {
         try {
-            const res = await fetch(`${apiBase}/Ticket/${id}`, {
+            const res = await fetch(`https://stpp-3qmk.onrender.com/api/Ticket/${id}`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
             const data = await res.json();
-            if (res.ok) setTicket(data);
-            else setMessage(data.message || "Failed to fetch ticket");
+            if (res.ok) {
+                setTicket(data);
+                setEditedData(data);
+            } else setMessage(data.message || "Failed to load ticket");
         } catch (err) {
             console.error(err);
-            setMessage("Failed to fetch ticket");
+            setMessage("Failed to load ticket");
         }
     };
 
-    // --- Fetch types ---
+    // Fetch ticket types
     const fetchTypes = async () => {
         try {
-            const res = await fetch(`${apiBase}/TicketType`, {
+            const res = await fetch("https://stpp-3qmk.onrender.com/api/TicketType", {
                 headers: { Authorization: `Bearer ${token}` },
             });
             const data = await res.json();
@@ -44,18 +44,16 @@ export default function TicketPage() {
         }
     };
 
-    // --- Fetch comments ---
+    // Fetch comments
     const fetchComments = async () => {
         try {
-            const res = await fetch(`${apiBase}/tickets/${id}/Comment`, {
+            const res = await fetch(`https://stpp-3qmk.onrender.com/api/Comment?ticketId=${id}`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
             const data = await res.json();
             if (res.ok) setComments(data);
-            else setMessage(data.message || "Failed to load comments");
         } catch (err) {
             console.error(err);
-            setMessage("Failed to fetch comments");
         }
     };
 
@@ -65,60 +63,59 @@ export default function TicketPage() {
         fetchComments();
     }, [id]);
 
-    // --- Save ticket ---
-    const handleSave = async () => {
+    // Save edited ticket
+    const handleSaveTicket = async () => {
         try {
-            const ticketData = {
-                id: ticket.id,
-                userId: ticket.userId || 0,
-                typeId: ticket.typeId || 0,
-                title: ticket.title || "",
-                description: ticket.description || "",
-                status: ticket.status || "Open",
-                comments: comments.map((c) => ({
+            const payload = {
+                id: editedData.id,
+                userId: editedData.userId || 0,
+                typeId: editedData.typeId || 0,
+                title: editedData.title || "",
+                description: editedData.description || "",
+                status: editedData.status || "Open",
+                comments: comments.map(c => ({
                     id: c.id,
                     ticketId: c.ticketId,
-                    userId: c.userId,
-                    body: c.body || c.content || "",
+                    userId: c.userId || 0,
+                    body: c.body || c.text || "",
                 })),
             };
 
-            const res = await fetch(`${apiBase}/Ticket/${id}`, {
+            const res = await fetch(`https://stpp-3qmk.onrender.com/api/Ticket/${ticket.id}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${token}`,
                 },
-                body: JSON.stringify(ticketData),
+                body: JSON.stringify(payload),
             });
 
-            if (res.ok) setMessage("Ticket updated successfully!");
-            else {
+            if (res.ok) {
+                setMessage("Ticket updated successfully!");
+                setEditing(false);
+                fetchTicket();
+            } else {
                 const data = await res.json();
                 setMessage(data.message || "Failed to update ticket");
             }
         } catch (err) {
             console.error(err);
-            setMessage("Error saving ticket");
+            setMessage("Failed to update ticket");
         }
     };
 
-    // --- Add comment ---
+    // Add new comment
     const handleAddComment = async () => {
         if (!newComment.trim()) return;
         try {
-            const res = await fetch(`${apiBase}/tickets/${id}/Comment`, {
+            const res = await fetch(`https://stpp-3qmk.onrender.com/api/Comment`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${token}`,
                 },
-                body: JSON.stringify({
-                    ticketId: id,
-                    body: newComment,
-                }),
+                body: JSON.stringify({ ticketId: id, body: newComment }),
             });
-
             if (res.ok) {
                 setNewComment("");
                 fetchComments();
@@ -132,112 +129,160 @@ export default function TicketPage() {
         }
     };
 
-    // --- Delete comment ---
+    // Delete comment
     const handleDeleteComment = async (commentId) => {
         if (!window.confirm("Delete this comment?")) return;
         try {
-            const res = await fetch(`${apiBase}/Comment/${commentId}`, {
+            const res = await fetch(`https://stpp-3qmk.onrender.com/api/Comment/${commentId}`, {
                 method: "DELETE",
                 headers: { Authorization: `Bearer ${token}` },
             });
             if (res.ok) fetchComments();
-            else setMessage("Failed to delete comment");
         } catch (err) {
             console.error(err);
-            setMessage("CORS or server error deleting comment");
         }
     };
 
-    if (!ticket) return <div>Loading ticket...</div>;
+    if (!ticket) return <div style={{ padding: "2rem" }}>Loading...</div>;
 
     return (
-        <div className="ticket-page">
-            <header className="header">
-                <h2 onClick={() => navigate("/admin-tickets")} style={{ cursor: "pointer" }}>
-                    ← Back to Tickets
-                </h2>
-            </header>
+        <div style={{ padding: "2rem", color: "white" }}>
+            <button onClick={() => navigate(-1)} className="btn">
+                <FaArrowLeft /> Back
+            </button>
 
-            <div className="ticket-details">
-                <h2>Edit Ticket</h2>
+            <h2 style={{ marginTop: "1rem" }}>Ticket Details</h2>
 
-                <label>Title</label>
-                <input
-                    type="text"
-                    value={ticket.title || ""}
-                    onChange={(e) => setTicket({ ...ticket, title: e.target.value })}
-                />
+            <div style={{ background: "#1e1e1e", padding: "1rem", borderRadius: "8px", marginTop: "1rem" }}>
+                {!editing ? (
+                    <>
+                        <h3>{ticket.title}</h3>
+                        <p><strong>Status:</strong> {ticket.status}</p>
+                        <p><strong>Type:</strong> {ticket.typeName || "Uncategorized"}</p>
+                        <p><strong>Description:</strong></p>
+                        <p>{ticket.description}</p>
 
-                <label>Description</label>
-                <textarea
-                    value={ticket.description || ""}
-                    onChange={(e) => setTicket({ ...ticket, description: e.target.value })}
-                    rows={4}
-                />
-
-                <label>Status</label>
-                <select
-                    value={ticket.status || "Open"}
-                    onChange={(e) => setTicket({ ...ticket, status: e.target.value })}
-                >
-                    <option value="Open">Open</option>
-                    <option value="Closed">Closed</option>
-                </select>
-
-                <label>Type</label>
-                <select
-                    value={ticket.typeId || ""}
-                    onChange={(e) => setTicket({ ...ticket, typeId: parseInt(e.target.value) || 0 })}
-                >
-                    <option value="0">Uncategorized</option>
-                    {types.map((t) => (
-                        <option key={t.id} value={t.id}>
-                            {t.name}
-                        </option>
-                    ))}
-                </select>
-
-                <button className="btn" onClick={handleSave}>
-                    Save Changes
-                </button>
-            </div>
-
-            <div className="comments-section">
-                <h3>Comments</h3>
-                <div className="comments-list">
-                    {comments.length === 0 && <p>No comments yet.</p>}
-                    {comments.map((c) => (
-                        <div key={c.id} className="comment">
-                            <p>{c.body || c.content}</p>
-                            <small>
-                                {c.createdAt ? new Date(c.createdAt).toLocaleString() : ""}
-                            </small>
-                            <button onClick={() => handleDeleteComment(c.id)}>
-                                <FaTrash />
+                        <button onClick={() => setEditing(true)} style={{ marginTop: "0.5rem" }}>
+                            <FaEdit /> Edit Ticket
+                        </button>
+                    </>
+                ) : (
+                    <>
+                        <input
+                            type="text"
+                            value={editedData.title || ""}
+                            onChange={(e) => setEditedData({ ...editedData, title: e.target.value })}
+                            placeholder="Title"
+                            style={{ width: "100%", marginBottom: "0.5rem" }}
+                        />
+                        <textarea
+                            value={editedData.description || ""}
+                            onChange={(e) => setEditedData({ ...editedData, description: e.target.value })}
+                            rows={4}
+                            placeholder="Description"
+                            style={{ width: "100%", marginBottom: "0.5rem" }}
+                        />
+                        <select
+                            value={editedData.status || "Open"}
+                            onChange={(e) => setEditedData({ ...editedData, status: e.target.value })}
+                            style={{ marginBottom: "0.5rem" }}
+                        >
+                            <option value="Open">Open</option>
+                            <option value="Closed">Closed</option>
+                        </select>
+                        <select
+                            value={editedData.typeId || ""}
+                            onChange={(e) => setEditedData({ ...editedData, typeId: e.target.value })}
+                            style={{ marginBottom: "0.5rem" }}
+                        >
+                            <option value="">Uncategorized</option>
+                            {types.map((t) => (
+                                <option key={t.id} value={t.id}>
+                                    {t.name}
+                                </option>
+                            ))}
+                        </select>
+                        <div>
+                            <button onClick={handleSaveTicket}>
+                                <FaSave /> Save
+                            </button>
+                            <button onClick={() => setEditing(false)} style={{ marginLeft: "0.5rem" }}>
+                                Cancel
                             </button>
                         </div>
-                    ))}
+                    </>
+                )}
+            </div>
+
+            <div style={{ marginTop: "2rem" }}>
+                <h3>Comments</h3>
+                <div
+                    style={{
+                        background: "#1e1e1e",
+                        padding: "1rem",
+                        borderRadius: "8px",
+                        maxHeight: "300px",
+                        overflowY: "auto",
+                    }}
+                >
+                    {comments.length === 0 ? (
+                        <p>No comments yet.</p>
+                    ) : (
+                        comments.map((c) => (
+                            <div
+                                key={c.id}
+                                style={{
+                                    background: "#2a2a2a",
+                                    margin: "0.5rem 0",
+                                    padding: "0.5rem",
+                                    borderRadius: "5px",
+                                    position: "relative",
+                                }}
+                            >
+                                <p>{c.body || c.text}</p>
+                                <button
+                                    style={{
+                                        position: "absolute",
+                                        top: "5px",
+                                        right: "5px",
+                                        background: "transparent",
+                                        border: "none",
+                                        color: "red",
+                                        cursor: "pointer",
+                                    }}
+                                    onClick={() => handleDeleteComment(c.id)}
+                                >
+                                    <FaTrash />
+                                </button>
+                            </div>
+                        ))
+                    )}
                 </div>
 
-                <textarea
-                    placeholder="Add a comment..."
-                    value={newComment}
-                    onChange={(e) => setNewComment(e.target.value)}
-                    rows={3}
-                />
-                <button className="btn" onClick={handleAddComment}>
-                    Add Comment
-                </button>
+                <div style={{ marginTop: "1rem" }}>
+                    <textarea
+                        value={newComment}
+                        onChange={(e) => setNewComment(e.target.value)}
+                        rows={2}
+                        placeholder="Write a comment..."
+                        style={{ width: "100%", marginBottom: "0.5rem" }}
+                    />
+                    <button onClick={handleAddComment}>
+                        <FaPlus /> Add Comment
+                    </button>
+                </div>
             </div>
 
             {message && (
-                <div className="modal" onClick={() => setMessage("")}>
-                    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                        <span className="close" onClick={() => setMessage("")}>
-                            &times;
-                        </span>
-                        <p>{message}</p>
-                    </div>
+                <div
+                    style={{
+                        background: "#333",
+                        padding: "0.5rem 1rem",
+                        borderRadius: "5px",
+                        marginTop: "1rem",
+                    }}
+                >
+                    {message}
                 </div>
             )}
         </div>
