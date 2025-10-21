@@ -276,7 +276,7 @@ export default function AdminTicketsPage() {
                                         borderRadius: "5px",
                                         cursor: "pointer",
                                     }}
-                                    onClick={() => openModal("ticket", t)}
+                                    onClick={() => navigate(`/ticket/${t.id}`)}
                                 >
                                     {t.title}
                                     <button
@@ -358,6 +358,35 @@ export default function AdminTicketsPage() {
                                         }
                                         rows={3}
                                     /><br></br>
+                                </>
+                            )}
+                            {modalType === "ticket" && (
+                                <>
+                                    <h3>{modalData.id ? "Edit Ticket" : "Add Ticket"}</h3>
+                                    <input
+                                        type="text"
+                                        placeholder="Title"
+                                        value={modalData.title || ""}
+                                        onChange={(e) => setModalData({ ...modalData, title: e.target.value })}
+                                        required
+                                    />
+                                    <textarea
+                                        placeholder="Description"
+                                        value={modalData.description || ""}
+                                        onChange={(e) =>
+                                            setModalData({ ...modalData, description: e.target.value })
+                                        }
+                                        rows={3}
+                                    />
+                                    <select
+                                        value={modalData.status || "Open"}
+                                        onChange={(e) =>
+                                            setModalData({ ...modalData, status: e.target.value })
+                                        }
+                                    >
+                                        <option value="Open">Open</option>
+                                        <option value="Closed">Closed</option>
+                                    </select>
                                 </>
                             )}
                             <button type="submit" className="btn">

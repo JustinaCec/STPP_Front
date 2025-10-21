@@ -7,20 +7,36 @@
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\Pages\\AdminTickets.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Justina\\Desktop\\STPP_Front\\school-helpdesk-frontend\\src\\App.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\App.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Justina\\Desktop\\STPP_Front\\school-helpdesk-frontend\\src\\Pages\\AdminUser.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\Pages\\AdminUser.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Justina\\Desktop\\STPP_Front\\school-helpdesk-frontend\\src\\main.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\main.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Justina\\Desktop\\STPP_Front\\school-helpdesk-frontend\\src\\Pages\\Ticket.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\Pages\\Ticket.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Justina\\Desktop\\STPP_Front\\school-helpdesk-frontend\\src\\Pages\\Login.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\Pages\\Login.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Justina\\Desktop\\STPP_Front\\school-helpdesk-frontend\\src\\Pages\\global.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\Pages\\global.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Justina\\Desktop\\STPP_Front\\school-helpdesk-frontend\\src\\Pages\\AdminUser.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\Pages\\AdminUser.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Justina\\Desktop\\STPP_Front\\school-helpdesk-frontend\\src\\Pages\\Landing.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\Pages\\Landing.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Justina\\Desktop\\STPP_Front\\school-helpdesk-frontend\\src\\index.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\index.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Justina\\Desktop\\STPP_Front\\school-helpdesk-frontend\\src\\main.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\main.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Justina\\Desktop\\STPP_Front\\school-helpdesk-frontend\\src\\App.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\App.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Justina\\Desktop\\STPP_Front\\school-helpdesk-frontend\\src\\Pages\\Landing.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
@@ -29,14 +45,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Justina\\Desktop\\STPP_Front\\school-helpdesk-frontend\\src\\Pages\\Register.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\Pages\\Register.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Justina\\Desktop\\STPP_Front\\school-helpdesk-frontend\\src\\Pages\\Landing.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\Pages\\Landing.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Justina\\Desktop\\STPP_Front\\school-helpdesk-frontend\\src\\Pages\\Login.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\Pages\\Login.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Justina\\Desktop\\STPP_Front\\school-helpdesk-frontend\\src\\App.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
@@ -50,11 +58,37 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "Ticket.jsx",
+              "DocumentMoniker": "C:\\Users\\Justina\\Desktop\\STPP_Front\\school-helpdesk-frontend\\src\\Pages\\Ticket.jsx",
+              "RelativeDocumentMoniker": "src\\Pages\\Ticket.jsx",
+              "ToolTip": "C:\\Users\\Justina\\Desktop\\STPP_Front\\school-helpdesk-frontend\\src\\Pages\\Ticket.jsx",
+              "RelativeToolTip": "src\\Pages\\Ticket.jsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAA9AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2025-10-21T06:12:42.14Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "index.css",
+              "DocumentMoniker": "C:\\Users\\Justina\\Desktop\\STPP_Front\\school-helpdesk-frontend\\src\\index.css",
+              "RelativeDocumentMoniker": "src\\index.css",
+              "ToolTip": "C:\\Users\\Justina\\Desktop\\STPP_Front\\school-helpdesk-frontend\\src\\index.css",
+              "RelativeToolTip": "src\\index.css",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-10-21T06:21:31.886Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
               "Title": "main.jsx",
               "DocumentMoniker": "C:\\Users\\Justina\\Desktop\\STPP_Front\\school-helpdesk-frontend\\src\\main.jsx",
               "RelativeDocumentMoniker": "src\\main.jsx",
@@ -62,7 +96,8 @@
               "RelativeToolTip": "src\\main.jsx",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
-              "WhenOpened": "2025-10-17T09:36:52.974Z"
+              "WhenOpened": "2025-10-17T09:36:52.974Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -72,50 +107,40 @@
               "RelativeDocumentMoniker": "src\\Pages\\AdminTickets.jsx",
               "ToolTip": "C:\\Users\\Justina\\Desktop\\STPP_Front\\school-helpdesk-frontend\\src\\Pages\\AdminTickets.jsx",
               "RelativeToolTip": "src\\Pages\\AdminTickets.jsx",
-              "ViewState": "AgIAAC0BAAAAAAAAAAAmwDwBAABHAAAAAAAAAA==",
+              "ViewState": "AgIAAB8BAAAAAAAAAAAAwDABAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
               "WhenOpened": "2025-10-17T08:33:08.102Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "AdminUser.jsx",
-              "DocumentMoniker": "C:\\Users\\Justina\\Desktop\\STPP_Front\\school-helpdesk-frontend\\src\\Pages\\AdminUser.jsx",
-              "RelativeDocumentMoniker": "src\\Pages\\AdminUser.jsx",
-              "ToolTip": "C:\\Users\\Justina\\Desktop\\STPP_Front\\school-helpdesk-frontend\\src\\Pages\\AdminUser.jsx",
-              "RelativeToolTip": "src\\Pages\\AdminUser.jsx",
-              "ViewState": "AgIAAFkAAAAAAAAAAAAAwGsAAAAfAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
-              "WhenOpened": "2025-10-16T11:37:49.727Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 5,
               "Title": "Landing.jsx",
               "DocumentMoniker": "C:\\Users\\Justina\\Desktop\\STPP_Front\\school-helpdesk-frontend\\src\\Pages\\Landing.jsx",
               "RelativeDocumentMoniker": "src\\Pages\\Landing.jsx",
               "ToolTip": "C:\\Users\\Justina\\Desktop\\STPP_Front\\school-helpdesk-frontend\\src\\Pages\\Landing.jsx",
               "RelativeToolTip": "src\\Pages\\Landing.jsx",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAADgAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAA4AAAAmAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
-              "WhenOpened": "2025-10-16T11:15:20.652Z"
+              "WhenOpened": "2025-10-16T11:15:20.652Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 3,
               "Title": "Login.jsx",
               "DocumentMoniker": "C:\\Users\\Justina\\Desktop\\STPP_Front\\school-helpdesk-frontend\\src\\Pages\\Login.jsx",
               "RelativeDocumentMoniker": "src\\Pages\\Login.jsx",
               "ToolTip": "C:\\Users\\Justina\\Desktop\\STPP_Front\\school-helpdesk-frontend\\src\\Pages\\Login.jsx",
               "RelativeToolTip": "src\\Pages\\Login.jsx",
-              "ViewState": "AgIAAA4AAAAAAAAAAAAAwCAAAAAUAAAAAAAAAA==",
+              "ViewState": "AgIAAD4AAAAAAAAAAAAAwEsAAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
-              "WhenOpened": "2025-10-16T11:01:09.67Z"
+              "WhenOpened": "2025-10-16T11:01:09.67Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 9,
               "Title": "Landing.css",
               "DocumentMoniker": "C:\\Users\\Justina\\Desktop\\STPP_Front\\school-helpdesk-frontend\\src\\Pages\\Landing.css",
               "RelativeDocumentMoniker": "src\\Pages\\Landing.css",
@@ -127,7 +152,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "global.css",
               "DocumentMoniker": "C:\\Users\\Justina\\Desktop\\STPP_Front\\school-helpdesk-frontend\\src\\Pages\\global.css",
               "RelativeDocumentMoniker": "src\\Pages\\global.css",
@@ -135,11 +160,38 @@
               "RelativeToolTip": "src\\Pages\\global.css",
               "ViewState": "AgIAADcAAAAAAAAAAAAAAEUAAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2025-10-09T11:23:05.162Z"
+              "WhenOpened": "2025-10-09T11:23:05.162Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 8,
+              "Title": "App.jsx",
+              "DocumentMoniker": "C:\\Users\\Justina\\Desktop\\STPP_Front\\school-helpdesk-frontend\\src\\App.jsx",
+              "RelativeDocumentMoniker": "src\\App.jsx",
+              "ToolTip": "C:\\Users\\Justina\\Desktop\\STPP_Front\\school-helpdesk-frontend\\src\\App.jsx",
+              "RelativeToolTip": "src\\App.jsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2025-10-09T10:59:16.072Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AdminUser.jsx",
+              "DocumentMoniker": "C:\\Users\\Justina\\Desktop\\STPP_Front\\school-helpdesk-frontend\\src\\Pages\\AdminUser.jsx",
+              "RelativeDocumentMoniker": "src\\Pages\\AdminUser.jsx",
+              "ToolTip": "C:\\Users\\Justina\\Desktop\\STPP_Front\\school-helpdesk-frontend\\src\\Pages\\AdminUser.jsx",
+              "RelativeToolTip": "src\\Pages\\AdminUser.jsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2025-10-16T11:37:49.727Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
               "Title": "Register.jsx",
               "DocumentMoniker": "C:\\Users\\Justina\\Desktop\\STPP_Front\\school-helpdesk-frontend\\src\\Pages\\Register.jsx",
               "RelativeDocumentMoniker": "src\\Pages\\Register.jsx",
@@ -151,20 +203,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "App.jsx",
-              "DocumentMoniker": "C:\\Users\\Justina\\Desktop\\STPP_Front\\school-helpdesk-frontend\\src\\App.jsx",
-              "RelativeDocumentMoniker": "src\\App.jsx",
-              "ToolTip": "C:\\Users\\Justina\\Desktop\\STPP_Front\\school-helpdesk-frontend\\src\\App.jsx",
-              "RelativeToolTip": "src\\App.jsx",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAA4AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
-              "WhenOpened": "2025-10-09T10:59:16.072Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 11,
               "Title": "App.css",
               "DocumentMoniker": "C:\\Users\\Justina\\Desktop\\STPP_Front\\school-helpdesk-frontend\\src\\App.css",
               "RelativeDocumentMoniker": "src\\App.css",
