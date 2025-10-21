@@ -131,23 +131,25 @@ export default function AdminPage() {
             </div>
         );
     };
-
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        window.location.href = "/";
+    };
     return (
         <div className="landing-page">
             {/* HEADER */}
-            <header className="header">
+            {/* HEADER */}
+            <header
+                className="header"
+            >
                 <div className="logo">
-                    <img src={logo} alt="MyApp Logo" className="logo-img" />
+                    <img src={logo} alt="Logo" className="logo-img" />
                 </div>
-                <nav className={`nav-links ${menuOpen ? "active" : ""}`}>
-                    <Link to="/">Home</Link>
-                    <Link to="/login">Login</Link>
-                    <Link to="/register">Register</Link>
-                </nav>
-                <div className="header-controls">
-                    <div className="hamburger" onClick={toggleMenu}>
-                        {menuOpen ? <FaTimes /> : <FaBars />}
-                    </div>
+                <div>
+                    <Link to="/tickets">Tickets</Link>
+                    <button onClick={handleLogout} className="btn">
+                        Logout
+                    </button>
                 </div>
             </header>
 

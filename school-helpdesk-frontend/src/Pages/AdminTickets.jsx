@@ -199,17 +199,12 @@ export default function AdminTicketsPage() {
             {/* HEADER */}
             <header
                 className="header"
-                style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    padding: "1rem 2rem",
-                }}
             >
                 <div className="logo">
                     <img src={logo} alt="Logo" className="logo-img" />
                 </div>
                 <div>
+                    <Link to="/admin">Users</Link>
                     <button onClick={() => openModal("type", {})} className="btn" style={{ marginRight: "1rem" }}>
                         <FaPlus /> Create Type
                     </button>
@@ -364,6 +359,12 @@ export default function AdminTicketsPage() {
             )}
 
             <MessageModal message={message} onClose={() => setMessage("")} />
+            {/* FOOTER */}
+            <footer className="footer">
+                <p>
+                    &copy; 2025 MyApp | <Link to="#privacy">Privacy Policy</Link>
+                </p>
+            </footer>
         </div>
     );
 }

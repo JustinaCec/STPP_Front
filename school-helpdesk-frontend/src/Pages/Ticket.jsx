@@ -1,6 +1,8 @@
 ﻿import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { FaPlus, FaEdit, FaTrash, FaSave, FaArrowLeft } from "react-icons/fa";
+import logo from "../assets/logo.png";
+import "./global.css";
 
 export default function TicketDetailsPage() {
     const { id } = useParams();
@@ -194,9 +196,30 @@ export default function TicketDetailsPage() {
         }
     };
 
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        window.location.href = "/";
+    };
+
     if (!ticket) return <div style={{ padding: "2rem" }}>Loading...</div>;
 
     return (
+        <div className="landing-page">
+            {/* HEADER */}
+            <header
+                className="header"
+            >
+                <div className="logo">
+                    <img src={logo} alt="Logo" className="logo-img" />
+                </div>
+                <div>
+                    <Link to="/admin">Users</Link>
+                    <Link to="/tickets">Tickets</Link>
+                    <button onClick={handleLogout} className="btn">
+                        Logout
+                    </button>
+                </div>
+            </header>
         <div style={{ padding: "2rem", color: "white" }}>
             <button onClick={() => navigate(-1)} className="btn">
                 <FaArrowLeft /> Back
@@ -307,6 +330,11 @@ export default function TicketDetailsPage() {
                     {message}
                 </div>
             )}
-        </div>
+            </div>{/* FOOTER */}
+            <footer className="footer">
+                <p>
+                    &copy; 2025 MyApp | <Link to="#privacy">Privacy Policy</Link>
+                </p>
+            </footer></div>
     );
 }

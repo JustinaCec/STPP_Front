@@ -40,7 +40,7 @@ export default function Login() {
         setPassword("");
 
         // Redirect to admin page
-        navigate("/admin");
+        navigate("/tickets");
       } else {
         setMessage(data.message || "Login failed!");
       }
