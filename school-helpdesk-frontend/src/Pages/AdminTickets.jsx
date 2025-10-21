@@ -20,7 +20,10 @@ export default function AdminTicketsPage() {
     const fetchTypes = async () => {
         try {
             const res = await fetch("https://stpp-3qmk.onrender.com/api/TicketType", {
-                headers: { Authorization: `Bearer ${token}` },
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                },
             });
             const data = await res.json();
             if (res.ok) setTypes(data);
@@ -37,8 +40,11 @@ export default function AdminTicketsPage() {
         const uncategorizedTickets = [];
 
         try {
-            const res = await fetch("https://stpp-3qmk.onrender.com/api/Ticket/byType/${t.typeId}", {
-                headers: { Authorization: `Bearer ${token}` },
+            const res = await fetch("https://stpp-3qmk.onrender.com/api/Ticket", {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                },
             });
             const allTickets = await res.json();
 
