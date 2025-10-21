@@ -22,6 +22,7 @@ export default function TicketDetailsPage() {
             try {
                 const payload = JSON.parse(atob(token.split(".")[1]));
                 setUserId(payload.id || payload.userId);
+                console.log(payload); // debug here
             } catch (err) {
                 console.error("Failed to parse token:", err);
             }
