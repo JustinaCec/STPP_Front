@@ -173,16 +173,13 @@ export default function AdminTicketsPage() {
                     ? `https://stpp-3qmk.onrender.com/api/Ticket/${modalData.id}`
                     : "https://stpp-3qmk.onrender.com/api/Ticket";
 
-                // Only send title, description, and typeId
-                const { title, description, typeId } = modalData;
-
                 const res = await fetch(url, {
                     method,
                     headers: {
                         "Content-Type": "application/json",
                         Authorization: `Bearer ${token}`,
                     },
-                    body: JSON.stringify({ title, description, typeId }),
+                    body: JSON.stringify(modalData),
                 });
                 if (res.ok) {
                     setMessage("Ticket saved successfully");
