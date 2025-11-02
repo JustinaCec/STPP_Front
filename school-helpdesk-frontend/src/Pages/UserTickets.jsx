@@ -180,7 +180,7 @@ export default function UserTicketsPage() {
                         <div style={{ display: "flex", justifyContent: "space-between" }}>
                             <h3>{t.title}</h3>
                             <div>
-                                <button onClick={() => openModal(t)}>
+                                <button onClick={() => navigate(`/ticket/${t.id}`)}>
                                     <FaEdit />
                                 </button>
                                 <button onClick={() => handleDeleteTicket(t.id)}>
