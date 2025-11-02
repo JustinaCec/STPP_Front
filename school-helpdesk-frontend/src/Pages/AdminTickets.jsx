@@ -176,6 +176,7 @@ export default function AdminTicketsPage() {
                         Authorization: `Bearer ${token}`,
                     },
                     body: JSON.stringify({
+                        id: modalData.id,
                         name: modalData.name,
                         description: modalData.description,
                     }),

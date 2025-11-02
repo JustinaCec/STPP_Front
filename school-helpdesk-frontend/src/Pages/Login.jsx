@@ -13,42 +13,56 @@ export default function Login() {
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
-    try {
-      const response = await fetch(
-        "https://stpp-3qmk.onrender.com/api/User/login",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email, password }),
+        try {
+            const response = await fetch(
+                "https://stpp-3qmk.onrender.com/api/User/login",
+                {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ email, password }),
+                }
+            );
+
+            const data = await response.json();
+
+            if (response.ok) {
+                // Store JWT and refresh token
+                localStorage.setItem("token", data.token);
+                localStorage.setItem("refreshToken", data.refreshToken);
+
+                setMessage("Login successful!");
+
+                // Clear form
+                setEmail("");
+                setPassword("");
+
+                // Decode JWT to get role
+                try {
+                    const payload = JSON.parse(atob(data.token.split(".")[1]));
+                    const role = payload.role;
+
+                    if (role === "Admin") {
+                        navigate("/admin");  // Admin dashboard
+                    } else {
+                        navigate("/user");   // User tickets page
+                    }
+                } catch (err) {
+                    console.error("Failed to parse JWT:", err);
+                    navigate("/"); // fallback
+                }
+
+            } else {
+                setMessage(data.message || "Login failed!");
+            }
+        } catch (error) {
+            console.error(error);
+            setMessage("Login failed!");
         }
-      );
+    };
 
-      const data = await response.json();
-
-      if (response.ok) {
-        // Store JWT and refresh token
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("refreshToken", data.refreshToken);
-
-        setMessage("Login successful!");
-
-        // Clear form
-        setEmail("");
-        setPassword("");
-
-        // Redirect to admin page
-        navigate("/tickets");
-      } else {
-        setMessage(data.message || "Login failed!");
-      }
-    } catch (error) {
-      console.error(error);
-      setMessage("Login failed!");
-    }
-  };
 
   // Reusable modal for messages
   const MessageModal = ({ message, onClose }) => {
