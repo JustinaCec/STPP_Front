@@ -30,7 +30,7 @@ export default function UserTicketsPage() {
     const fetchTickets = async () => {
         if (!userId) return;
         try {
-            const res = await fetch(`https://stpp-3qmk.onrender.com/api/Ticket/user/${userId}`, {
+            const res = await fetch(`https://stpp-3qmk.onrender.com/api/Ticket`, {
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${token}`,

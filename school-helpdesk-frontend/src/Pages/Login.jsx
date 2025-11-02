@@ -47,7 +47,7 @@ export default function Login() {
                     if (role === "Admin") {
                         navigate("/admin");  // Admin dashboard
                     } else {
-                        navigate("/user");   // User tickets page
+                        navigate("/usertickets");   // User tickets page
                     }
                 } catch (err) {
                     console.error("Failed to parse JWT:", err);
