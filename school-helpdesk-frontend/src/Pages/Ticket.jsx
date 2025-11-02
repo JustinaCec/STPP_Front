@@ -17,21 +17,23 @@ export default function TicketDetailsPage() {
     const [editingCommentId, setEditingCommentId] = useState(null);
     const [editedCommentText, setEditedCommentText] = useState("");
     const [menuOpen, setMenuOpen] = useState(false);
-    const [role, setRole] = useState("user"); // default user
+
+    const token = localStorage.getItem("token");
+    const navigate = useNavigate();
+
+    const [role, setRole] = useState("Student"); // default user
     useEffect(() => {
         if (token) {
             try {
                 const payload = JSON.parse(atob(token.split(".")[1]));
                 setUserId(payload.id);
-                setRole(payload.role || "user");
+                setRole(payload.role || "Student");
             } catch (err) {
                 console.error("Failed to parse token:", err);
             }
         }
     }, [token]);
 
-    const token = localStorage.getItem("token");
-    const navigate = useNavigate();
 
     // Extract userId from JWT token
     useEffect(() => {
