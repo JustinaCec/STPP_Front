@@ -17,6 +17,18 @@ export default function TicketDetailsPage() {
     const [editingCommentId, setEditingCommentId] = useState(null);
     const [editedCommentText, setEditedCommentText] = useState("");
     const [menuOpen, setMenuOpen] = useState(false);
+    const [role, setRole] = useState("user"); // default user
+    useEffect(() => {
+        if (token) {
+            try {
+                const payload = JSON.parse(atob(token.split(".")[1]));
+                setUserId(payload.id);
+                setRole(payload.role || "user");
+            } catch (err) {
+                console.error("Failed to parse token:", err);
+            }
+        }
+    }, [token]);
 
     const token = localStorage.getItem("token");
     const navigate = useNavigate();
@@ -260,24 +272,28 @@ export default function TicketDetailsPage() {
                             placeholder="Description"
                             style={{ width: "100%", marginBottom: "0.5rem" }}
                         />
-                        <select
-                            value={editedData.status}
-                            onChange={(e) => setEditedData({ ...editedData, status: e.target.value })}
-                            style={{ marginBottom: "0.5rem" }}
-                        >
-                            <option value="Open">Open</option>
-                            <option value="Closed">Closed</option>
-                        </select>
-                        <select
-                            value={editedData.typeId}
-                            onChange={(e) => setEditedData({ ...editedData, typeId: Number(e.target.value) })}
-                            style={{ marginBottom: "0.5rem" }}
-                        >
-                            <option value="">Uncategorized</option>
-                            {types.map((t) => (
-                                <option key={t.id} value={t.id}>{t.name}</option>
-                            ))}
-                        </select>
+                                <select
+                                    value={editedData.status}
+                                    onChange={(e) => setEditedData({ ...editedData, status: e.target.value })}
+                                    style={{ marginBottom: "0.5rem" }}
+                                    disabled={role !== "Admin"}  // <-- user cannot edit status
+                                >
+                                    <option value="Open">Open</option>
+                                    <option value="Closed">Closed</option>
+                                </select>
+
+                                <select
+                                    value={editedData.typeId}
+                                    onChange={(e) => setEditedData({ ...editedData, typeId: Number(e.target.value) })}
+                                    style={{ marginBottom: "0.5rem" }}
+                                    disabled={role !== "Admin"} // <-- user cannot edit type
+                                >
+                                    <option value="">Uncategorized</option>
+                                    {types.map((t) => (
+                                        <option key={t.id} value={t.id}>{t.name}</option>
+                                    ))}
+                                </select>
+
                         <div>
                             <button onClick={handleSaveTicket}><FaSave /> Save</button>
                             <button onClick={() => setEditing(false)} style={{ marginLeft: "0.5rem" }}>Cancel</button>
